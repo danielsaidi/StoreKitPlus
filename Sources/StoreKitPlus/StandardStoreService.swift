@@ -21,19 +21,38 @@ import StoreKit
  to the app.
  */
 public class StandardStoreService: StoreService {
-    
+
     /**
      Create a service instance for the provided `productIds`,
      that syncs any changes to the provided `context`.
-     
+
      - Parameters:
        - productIds: The IDs of the products to handle.
        - context: The store context to sync with.
      */
     public init(
         productIds: [String],
-        context: StoreContext = StoreContext()) {
+        context: StoreContext = StoreContext()
+    ) {
         self.productIds = productIds
+        self.storeContext = context
+        self.transactionTask = nil
+        self.transactionTask = getTransactionListenerTask()
+    }
+
+    /**
+     Create a service instance for the provided `products`,
+     that syncs any changes to the provided `context`.
+
+     - Parameters:
+       - products: The products to handle.
+       - context: The store context to sync with.
+     */
+    public init<Product: ProductRepresentable>(
+        products: [Product],
+        context: StoreContext = StoreContext()
+    ) {
+        self.productIds = products.map { $0.id }
         self.storeContext = context
         self.transactionTask = nil
         self.transactionTask = getTransactionListenerTask()

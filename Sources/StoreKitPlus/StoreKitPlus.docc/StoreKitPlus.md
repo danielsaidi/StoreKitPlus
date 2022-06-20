@@ -7,6 +7,8 @@ StoreKitPlus adds extra functionality for working with StoreKit 2, like extensio
 
 ![StoreKitPlus logo](Logo.png)
 
+StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, a ``StoreService`` protocol and a ``StandardStoreService`` implementation that simplifies fetching, purchasing and syncing products, as well as a ``ProductRepresentable`` protocol that lets you use local product representations in your app.
+
 
 ## Supported Platforms
 
@@ -48,6 +50,10 @@ StoreKitPlus is available under the MIT license.
 
 
 ## Topics
+
+### Articles
+
+- <doc:Getting-Started>
 
 ### Foundation
 

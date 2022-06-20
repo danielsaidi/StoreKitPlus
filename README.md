@@ -15,9 +15,9 @@
 
 ## About StoreKitPlus
 
-StoreKitPlus adds extra functionality for working with StoreKit 2, like extensions, observable state, store services, etc. 
+StoreKitPlus adds extra functionality for working with StoreKit 2, like extensions, observable state, services, etc. 
 
-With StoreKitPlus, you have an observable `StoreContext` that lets you observe store state, as well as a `StoreService` protocol and implementation that simplifies fetching, syncing and purchasing products.
+StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, a ``StoreService`` protocol and a ``StandardStoreService`` implementation that simplifies fetching, purchasing and syncing products, as well as a ``ProductRepresentable`` protocol that lets you use local product representations in your app.
 
 
 
@@ -56,6 +56,14 @@ The [online documentation][Documentation] has a guide to get started with StoreK
 The [online documentation][Documentation] contains more information, code examples etc. and makes it easy to overview the various parts of the library.
 
 The online documentation is currently iOS only. To generate documentation for other platforms, open the package in Xcode, select a simulator then run `Product/Build Documentation`.
+
+
+
+## Demo Application
+
+This project currently has no demo app, since registering and testing real products requires setting up App Store Connect with your products.
+
+Just let me know if you'd like a demo app, and I'll see if I can create an app that has a local StoreKit file and doesn't have to sync with App Store Connect. 
 
 
 
