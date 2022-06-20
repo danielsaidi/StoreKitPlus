@@ -1,9 +1,9 @@
 //
 //  StoreServiceError.swift
-//  SwiftKit
+//  StoreKitPlus
 //
-//  Created by Daniel Saidi on 2021-11-08.
-//  Copyright © 2021 Daniel Saidi. All rights reserved.
+//  Created by Daniel Saidi on 2022-06-20.
+//  Copyright © 2022 Daniel Saidi. All rights reserved.
 //
 
 import StoreKit

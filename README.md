@@ -15,7 +15,7 @@
 
 ## About StoreKitPlus
 
-StoreKitPlus adds extra functionality for working with the StoreKit 2 framework, like extensions, new utilites, services etc. 
+StoreKitPlus adds extra functionality for working with StoreKit 2, like extensions, observable state, store services, etc. 
 
 
 
