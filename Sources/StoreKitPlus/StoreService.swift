@@ -12,7 +12,7 @@ import StoreKit
  This protocol can be implemented by any classes that can be
  used to manage store products.
  */
-public protocol StoreService {
+public protocol StoreService: AnyObject {
     
     /**
      Get all available products.
