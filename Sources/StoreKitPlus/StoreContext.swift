@@ -26,10 +26,13 @@ public class StoreContext: ObservableObject {
 
     /**
      Create a context instance.
+
+     - Parameters:
+       - productIds: An optional list of initial product IDs to use if no IDs have been persisted yet.
      */
-    public init() {
+    public init(productIds: [String] = []) {
         products = []
-        productIds = persistedProductIds
+        self.productIds = persistedProductIds.isEmpty ? productIds : persistedProductIds
         purchasedProductIds = persistedPurchasedProductIds
     }
     
@@ -106,7 +109,6 @@ public class StoreContext: ObservableObject {
     private var persistedPurchasedProductIds: [String]
 }
 
-@available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *)
 private extension StoreContext {
     
     static func key(_ name: String) -> String { "com.danielsaidi.storekitplus.\(name)" }
