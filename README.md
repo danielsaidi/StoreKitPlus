@@ -43,6 +43,12 @@ You can also clone the repository and build the library locally.
 
 
 
+## Getting started
+
+The [online documentation][Documentation] has a guide to get started with StoreKitPlus.
+
+
+
 ## Documentation
 
 The [online documentation][Documentation] contains more information, code examples etc. and makes it easy to overview the various parts of the library.

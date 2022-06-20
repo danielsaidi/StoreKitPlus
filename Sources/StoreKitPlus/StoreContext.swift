@@ -109,5 +109,5 @@ public class StoreContext: ObservableObject {
 @available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *)
 private extension StoreContext {
     
-    static func key(_ name: String) -> String { "store.\(name)" }
+    static func key(_ name: String) -> String { "com.danielsaidi.storekitplus.\(name)" }
 }
