@@ -13,4 +13,4 @@ import StoreKit
  can be used if you want a single service that takes care of
  everything store-related.
  */
-public protocol StoreService: AnyObject, StoreProductService, StorePurchaseService, StoreSyncService {}
+public protocol StoreService: StoreProductService, StorePurchaseService, StoreSyncService {}
