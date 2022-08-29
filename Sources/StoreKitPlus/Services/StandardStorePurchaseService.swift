@@ -68,7 +68,6 @@ open class StandardStorePurchaseService: StorePurchaseService {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *)
 private extension StandardStorePurchaseService {
 
     /**
@@ -130,7 +129,6 @@ private extension StandardStorePurchaseService {
 }
 
 @MainActor
-@available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *)
 private extension StandardStorePurchaseService {
 
     func updateContext(with transaction: Transaction) {

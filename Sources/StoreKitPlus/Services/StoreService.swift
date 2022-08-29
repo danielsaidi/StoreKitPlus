@@ -9,7 +9,8 @@
 import StoreKit
 
 /**
- This protocol inherits multiple store protocols, and can be
- used if you want a single service that does everything.
+ This protocol inherits multiple store service protocols and
+ can be used if you want a single service that takes care of
+ everything store-related.
  */
 public protocol StoreService: AnyObject, StoreProductService, StorePurchaseService, StoreSyncService {}
