@@ -23,7 +23,7 @@ open class StandardStorePurchaseService: StorePurchaseService {
 
      - Parameters:
        - productIds: The IDs of the products to fetch.
-     - context: The store context to sync with.
+       - context: The store context to sync with.
      */
     public init(
         productIds: [String],
