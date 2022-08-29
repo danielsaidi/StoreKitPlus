@@ -17,7 +17,7 @@
 
 StoreKitPlus adds extra functionality for working with StoreKit 2, like extensions, observable state, services, etc. 
 
-StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, a ``StoreService`` protocol and a ``StandardStoreService`` implementation that simplifies fetching, purchasing and syncing products, as well as a ``ProductRepresentable`` protocol that lets you use local product representations in your app.
+StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, service protocols and implementations that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you add a local product representation to your app.
 
 
 
