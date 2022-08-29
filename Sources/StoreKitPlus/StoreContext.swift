@@ -11,16 +11,22 @@ import StoreKit
 /**
  This class can be used to manage store information in a way
  that makes it observable.
- 
- Since the `Product` type isn't `Codable`, `products` is not
- permanently persisted, which means that this information is
- reset if the app restarts. Due to this, any changes to this
- property will also update `productIds`, which gives you the
- option to map the IDs to a local product representation and
- present previously fetched products.
- 
- Note however that a `Product` instance is needed to perform
- a purchase.
+
+ You can use a ``StandardStoreService`` to sync product info
+ with this context, which will update the ``products`` array
+ with matching products.
+
+ Since a StoreKit `Product` is not `Codable`, the ``products``
+ array is not permanently persisted. This means that it will
+ reset when the app is restarted. Due to this, there is also
+ a ``productIds`` property that is permanently persisted. It
+ gives you the option to map ``productIds`` to local product
+ representations whenever the app can't access StoreKit.
+
+ However, a StoreKit `Product` instance is needed to perform
+ a purchase. If the app fails to fetch products, e.g. if the
+ app is offline, you should show a spinner or an error alert
+ to inform users that product information can't be retrieved.
  */
 public class StoreContext: ObservableObject {
 
@@ -55,9 +61,6 @@ public class StoreContext: ObservableObject {
      The IDs of available product that have been synced with
      the context with the ``products`` property.
 
-     You can use this property to keep track of the products
-     that have been fetched from StoreKit.
-
      Unlike the non-persisted ``products``, this property is
      persisted, which means that you can map a local product
      collection to these IDs, to present product information
@@ -84,15 +87,12 @@ public class StoreContext: ObservableObject {
 
     /**
      The IDs of purchased product that have been synced with
-     the context with the ``purchaseTransactions`` property.
-
-     You can use this property to keep track of the products
-     that have been purchased by the user.
+     the context using the ``purchaseTransactions`` property.
 
      Unlike the non-persisted ``purchaseTransactions``, this
      property is persisted, which means that you can use the
      property to keep track of purchased products even if an
-     app is offline and can't access the StoreKit backend.
+     app can't access the StoreKit backend.
      */
     @Published
     public internal(set) var purchasedProductIds: [String] = [] {
@@ -107,6 +107,19 @@ public class StoreContext: ObservableObject {
     
     @Persisted(key: key("purchasedProductIds"), defaultValue: [])
     private var persistedPurchasedProductIds: [String]
+}
+
+public extension StoreContext {
+
+    /**
+     Get a product with a certain ID.
+
+     This function will only return matching products if the
+     ``products`` array has been synced with StoreKit.
+     */
+    func product(withId id: String) -> Product? {
+        products.first { $0.id == id }
+    }
 }
 
 private extension StoreContext {

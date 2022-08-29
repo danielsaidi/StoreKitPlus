@@ -1,6 +1,23 @@
 # Release notes
 
 
+## 0.2
+
+This release breaks up the `StoreService` protocol into multiple protocols.
+
+This is done to simplify implementing custom services, mocking in unit tests etc.
+
+### ✨ Features
+
+* `StoreService` has been split up into three protocols: `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
+* `StoreContext` has a new `product(withId:)` function.
+
+### 💡 Behavior changes
+
+* `StoreService` now inherits `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
+* `StandardStoreService` now implements `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
+
+
 ## 0.1
 
 This is a first beta release of StoreKitPlus.

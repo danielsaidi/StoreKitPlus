@@ -21,7 +21,7 @@ import Foundation
  */
 public protocol ProductRepresentable: Identifiable {
 
-    var id: String { get }
+    var id: ProductID { get }
 }
 
 public extension Collection where Element: ProductRepresentable {

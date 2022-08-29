@@ -10,7 +10,7 @@ import StoreKit
 
 /**
  This service class implements the ``StoreService`` protocol
- by integrating with StoreKit 2.
+ and can be used to integrate with StoreKit.
  
  The service keeps products and purchases in sync, using the
  provided ``StoreContext``. This can be used by e.g. SwiftUI
@@ -20,7 +20,7 @@ import StoreKit
  product collection, by adding a StoreKit configuration file
  to the app.
  */
-public class StandardStoreService: StoreService {
+open class StandardStoreService: StoreService {
 
     /**
      Create a service instance for the provided `productIds`,
@@ -69,14 +69,14 @@ public class StandardStoreService: StoreService {
     /**
      Get all available products.
      */
-    public func getProducts() async throws -> [Product] {
+    open func getProducts() async throws -> [Product] {
         try await Product.products(for: productIds)
     }
     
     /**
      Purchase a certain product.
      */
-    public func purchase(_ product: Product) async throws -> Product.PurchaseResult {
+    open func purchase(_ product: Product) async throws -> Product.PurchaseResult {
         let result = try await product.purchase()
         switch result {
         case .success(let result): try await handleTransaction(result)
@@ -90,7 +90,7 @@ public class StandardStoreService: StoreService {
     /**
      Restore purchases that are not on this device.
      */
-    public func restorePurchases() async throws {
+    open func restorePurchases() async throws {
         try await syncTransactions()
     }
 
@@ -98,7 +98,7 @@ public class StandardStoreService: StoreService {
      Sync product and purchase information from the store to
      the provided store context.
      */
-    public func syncStoreData() async throws {
+    open func syncStoreData() async throws {
         let products = try await getProducts()
         await updateContext(with: products)
         try await restorePurchases()
