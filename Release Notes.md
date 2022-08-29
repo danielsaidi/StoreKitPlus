@@ -9,6 +9,8 @@ This is done to simplify implementing custom services, mocking in unit tests etc
 
 ### ✨ Features
 
+* `StandardProductService` is a new service that takes care of fetching products.
+* `StandardPurchaseService` is a new service that takes care of purchasing products and restoring purchases.
 * `StoreService` has been split up into three protocols: `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
 * `StoreContext` has a new `product(withId:)` function.
 
@@ -16,6 +18,7 @@ This is done to simplify implementing custom services, mocking in unit tests etc
 
 * `StoreService` now inherits `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
 * `StandardStoreService` now implements `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
+* `StandardStoreService` now uses nested service implementations to make its own logic easier to overview.
 
 
 ## 0.1

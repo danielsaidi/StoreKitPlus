@@ -36,8 +36,11 @@ open class StandardStoreService: StoreService {
     ) {
         self.productIds = productIds
         self.storeContext = context
-        self.transactionTask = nil
-        self.transactionTask = getTransactionListenerTask()
+        self.productService = StandardStoreProductService(
+            productIds: productIds)
+        self.purchaseService = StandardStorePurchaseService(
+            productIds: productIds,
+            context: context)
     }
 
     /**
@@ -48,50 +51,43 @@ open class StandardStoreService: StoreService {
        - products: The products to handle.
        - context: The store context to sync with.
      */
-    public init<Product: ProductRepresentable>(
+    public convenience init<Product: ProductRepresentable>(
         products: [Product],
         context: StoreContext = StoreContext()
     ) {
-        self.productIds = products.map { $0.id }
-        self.storeContext = context
-        self.transactionTask = nil
-        self.transactionTask = getTransactionListenerTask()
-    }
-    
-    deinit {
-        self.transactionTask = nil
+        self.init(
+            productIds: products.map { $0.id },
+            context: context
+        )
     }
     
     private let productIds: [String]
+    private let productService: StoreProductService
+    private let purchaseService: StorePurchaseService
     private let storeContext: StoreContext
-    private var transactionTask: Task<Void, Error>?
     
     /**
      Get all available products.
      */
     open func getProducts() async throws -> [Product] {
-        try await Product.products(for: productIds)
+        try await productService.getProducts()
     }
     
     /**
      Purchase a certain product.
+
+     - Parameters:
+       - product: The product to purchase.
      */
     open func purchase(_ product: Product) async throws -> Product.PurchaseResult {
-        let result = try await product.purchase()
-        switch result {
-        case .success(let result): try await handleTransaction(result)
-        case .pending: break
-        case .userCancelled: break
-        @unknown default: break
-        }
-        return result
+        try await purchaseService.purchase(product)
     }
     
     /**
      Restore purchases that are not on this device.
      */
     open func restorePurchases() async throws {
-        try await syncTransactions()
+        try await purchaseService.restorePurchases()
     }
 
     /**
@@ -105,66 +101,7 @@ open class StandardStoreService: StoreService {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *)
-private extension StandardStoreService {
-    
-    /**
-     Create a task that can be used to listen for and acting
-     on transaction changes.
-     */
-    func getTransactionListenerTask() -> Task<Void, Error> {
-        Task.detached {
-            for await result in Transaction.updates {
-                do {
-                    try await self.handleTransaction(result)
-                } catch {
-                    print("Transaction listener error: \(error)")
-                }
-            }
-        }
-    }
-    
-    /**
-     Try resolving a valid transaction for a certain product.
-     */
-    func getValidTransaction(for productId: String) async throws -> Transaction? {
-        guard let latest = await Transaction.latest(for: productId) else { return nil }
-        let result = try verifyTransaction(latest)
-        return result.isValid ? result : nil
-    }
-    
-    /**
-     Handle the transaction in the provided `result`.
-     */
-    func handleTransaction(_ result: VerificationResult<Transaction>) async throws {
-        let transaction = try verifyTransaction(result)
-        await updateContext(with: transaction)
-        await transaction.finish()
-    }
-    
-    /**
-     Sync the transactions of all available products.
-     */
-    func syncTransactions() async throws {
-        var transactions: [Transaction] = []
-        for id in productIds {
-            if let transaction = try await getValidTransaction(for: id) {
-                transactions.append(transaction)
-            }
-        }
-        await updateContext(with: transactions)
-    }
-    
-    /**
-     Verify the transaction in the provided `result`
-     */
-    func verifyTransaction(_ result: VerificationResult<Transaction>) throws -> Transaction {
-        switch result {
-        case .unverified(let transaction, let error): throw StoreServiceError.invalidTransaction(transaction, error)
-        case .verified(let transaction): return transaction
-        }
-    }
-}
+
 
 @MainActor
 @available(iOS 15.0, macOS 12.0, watchOS 8.0, tvOS 15.0, *)
@@ -172,16 +109,5 @@ private extension StandardStoreService {
     
     func updateContext(with products: [Product]) {
         storeContext.products = products
-    }
-    
-    func updateContext(with transaction: Transaction) {
-        var transactions = storeContext.purchaseTransactions
-            .filter { $0.productID != transaction.productID }
-        transactions.append(transaction)
-        storeContext.purchaseTransactions = transactions
-    }
-    
-    func updateContext(with transactions: [Transaction]) {
-        storeContext.purchaseTransactions = transactions
     }
 }

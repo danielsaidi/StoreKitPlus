@@ -13,8 +13,7 @@ import StoreKit
  used to sync StoreKit purchase and product information.
 
  The protocol is implemented by ``StandardStoreService``, so
- you can use that class to get a standard implementation, or
- subclass it to customize its behavior.
+ you can use it to get a standard implementation.
  */
 public protocol StoreSyncService: AnyObject {
 

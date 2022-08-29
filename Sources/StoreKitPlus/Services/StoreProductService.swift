@@ -12,9 +12,8 @@ import StoreKit
  This protocol can be implemented by any classes that can be
  used to retrieve StoreKit products.
 
- The protocol is implemented by ``StandardStoreService``, so
- you can use that class to get a standard implementation, or
- subclass it to customize its behavior.
+ The protocol is implemented by ``StandardStoreService`` and
+ ``StandardStoreProductService``.
  */
 public protocol StoreProductService: AnyObject {
 
