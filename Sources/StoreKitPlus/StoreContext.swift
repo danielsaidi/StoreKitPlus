@@ -109,19 +109,6 @@ public class StoreContext: ObservableObject {
     private var persistedPurchasedProductIds: [String]
 }
 
-public extension StoreContext {
-
-    /**
-     Get a product with a certain ID.
-
-     This function will only return matching products if the
-     ``products`` array has been synced with StoreKit.
-     */
-    func product(withId id: String) -> Product? {
-        products.first { $0.id == id }
-    }
-}
-
 private extension StoreContext {
     
     static func key(_ name: String) -> String { "com.danielsaidi.storekitplus.\(name)" }

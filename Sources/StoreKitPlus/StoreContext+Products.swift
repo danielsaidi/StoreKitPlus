@@ -29,4 +29,17 @@ public extension StoreContext {
     func isProductPurchased(_ product: Product) -> Bool {
         isProductPurchased(id: product.id)
     }
+
+    /**
+     Get a product with a certain ID.
+
+     This function will only return matching products if the
+     ``products`` array has been synced with StoreKit.
+
+     - Parameters:
+       - id: The ID of the product to fetch.
+     */
+    func product(withId id: String) -> Product? {
+        products.first { $0.id == id }
+    }
 }

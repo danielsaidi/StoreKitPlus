@@ -58,13 +58,22 @@ StoreKitPlus is available under the MIT license.
 ### Foundation
 
 - ``StoreContext``
-- ``StoreService``
-- ``StoreServiceError``
-- ``StandardStoreService``
 
 ### Products
 
+- ``ProductID``
 - ``ProductRepresentable``
+
+### Services
+
+- ``StandardStoreProductService``
+- ``StandardStorePurchaseService``
+- ``StandardStoreService``
+- ``StoreProductService``
+- ``StorePurchaseService``
+- ``StoreSyncService``
+- ``StoreService``
+- ``StoreServiceError``
 
 ### Validation
 
