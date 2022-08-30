@@ -10,6 +10,7 @@ StoreKitPlus adds extra functionality for working with StoreKit 2, like extensio
 StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, service protocols and implementations that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you add a local product representation to your app.
 
 
+
 ## Supported Platforms
 
 StoreKitPlus supports `iOS 15`, `macOS 12`, `tvOS 15` and `watchOS 8`.
@@ -18,13 +19,13 @@ StoreKitPlus supports `iOS 15`, `macOS 12`, `tvOS 15` and `watchOS 8`.
 
 ## Installation
 
-The best way to add StoreKitPlus to your app is to use the Swift Package Manager.
+StoreKitPlus can be installed with the Swift Package Manager:
 
 ```
 https://github.com/danielsaidi/StoreKitPlus.git
 ```
 
-StoreKitPlus also supports CocoaPods:
+or with CocoaPods:
 
 ```
 pod StoreKitPlus
@@ -39,7 +40,6 @@ You can also clone the repository and build the library locally.
 The online documentation is currently iOS-specific. To generate documentation for other platforms, open the package in Xcode, select a simulator then run `Product/Build Documentation`.
 
 Note that type extensions are not included in this documentation.
-
 
 
 

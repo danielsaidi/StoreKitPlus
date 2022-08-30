@@ -29,13 +29,13 @@ StoreKitPlus supports `iOS 15`, `macOS 12`, `tvOS 15` and `watchOS 8`.
 
 ## Installation
 
-The best way to add StoreKitPlus to your app is to use the Swift Package Manager.
+StoreKitPlus can be installed with the Swift Package Manager:
 
 ```
 https://github.com/danielsaidi/StoreKitPlus.git
 ```
 
-StoreKitPlus also supports CocoaPods:
+or with CocoaPods:
 
 ```
 pod StoreKitPlus
