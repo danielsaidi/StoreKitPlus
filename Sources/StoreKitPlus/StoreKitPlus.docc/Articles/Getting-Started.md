@@ -1,8 +1,6 @@
 # Getting Started
 
-StoreKitPlus is a Swift-based library that adds extra functionality for working with StoreKit 2, like extensions, observable state, store services, etc.
-
-StoreKitPlus builds on the great foundation that is provided by StoreKit 2 and just aims to make it easier to use StoreKit 2 in e.g. SwiftUI. 
+This article describes how you get started with StoreKitPlus.
 
 
 ## Services
