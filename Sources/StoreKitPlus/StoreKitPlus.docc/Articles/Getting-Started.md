@@ -5,23 +5,21 @@ This article describes how you get started with StoreKitPlus.
 
 ## Services
 
-StoreKitPlus has a bunch of service protocols and classes that help you integrate with StoreKit.
+StoreKitPlus has services and observable state that help you integrate with StoreKit.
 
- * ``StoreProductService`` can be implemented by classes that can be used to retrieve StoreKit products.
- * ``StorePurchaseService`` can be implemented by classes that can be used to perform StoreKit product purchase operations.
- * ``StoreSyncService`` can be implemented by classes that can be used to sync StoreKit purchase and product information.
+ * ``StoreProductService`` can be implemented by types that can fetch StoreKit products.
+ * ``StorePurchaseService`` can be implemented by types that can purchase StoreKit products.
+ * ``StoreSyncService`` can be implemented by types that can sync purchases and products.
 
 There is also a ``StoreService`` protocol that implements all these protocols, for when you want a single service to do everything.
 
-The ``StandardStoreProductService``, ``StandardStorePurchaseService`` and ``StandardStoreService`` service classes implement these protocols and can be subclassed in case you want to customize the standard behavior. 
-
-This abstract service layer lets you communicate with StoreKit in a way that makes it possible to customize functionality, mock services in unit tests, etc. It also lets you reuse functionality for handling purchases and transactions, which otherwise can become complicated.
+``StandardStoreProductService``, ``StandardStorePurchaseService`` and ``StandardStoreService`` implement these protocols and can be subclassed to customize their behavior.
 
 
 
 ## Observable state
 
-StoreKitPlus has an observable ``StoreContext`` class that can be used to observe the state for a certain app. It lets you keep track of available and purchased products and can be injected into services to automatically keep the context in sync.
+StoreKitPlus has an observable ``StoreContext`` that keeps track of the available and purchased products for an app. It can be injected into the store services to automatically be kept in sync.
 
 For instance, injecting a context into a ``StandardStoreService`` and calling ``StoreSyncService/syncStoreData()`` will automatically write products and transactions to the context:
 
@@ -32,41 +30,80 @@ let service = StandardStoreService(
     productIds: productIds,
     context: context
 )
-try await Product.syncStoreData()
+try await service.syncStoreData()
 ```
 
-Although StoreKit products and transactions are not codable, the context will persist fetched and purchased product IDs, which means that you can use local product representations (read more further down) to keep track of products and purchases even if your app fails to communicate with StoreKit, for instance when it's offline.
+Although StoreKit products and transactions are not codable, this context will persist products and purchases by their ID, which means that you can use local product representations to keep track of products and purchases in your app.
+
+
+
+## Local product representations
+
+You can use the ``ProductRepresentable`` protocol protocol to create local product representations that can be mapped to to the real products by ID.
+
+For instance, here we define an `AppProduct` enum that maps to real App Store Connect product IDs:
+
+```swift
+enum AppProduct: String, CaseIterable, ProductRepresentable {
+
+    case premiumMonthly = "com.myapp.products.premium.monthly"
+    case premiumYearly = "com.myapp.products.premium.yearly"
+
+    var id: String { rawValue }
+}
+```
+
+You can now use this collection to initialize a standard store service:
+
+```swift
+let products = AppProduct.allCases
+let context = StoreContext()
+let service = StandardStoreService(
+    products: products, 
+    context: context)
+```
+
+You can also use the context to filter a product collection:
+
+```swift
+let available = products.available(in: context)
+let purchased = products.purchased(in: context)
+```
+
+A benefit of using local product representations, is that the context will persist fetched and purchased product IDs, which means that the data will be available even if the app goes offline.  
+
+Since some operations require real StoreKit `Product` values, you should display a loading indicator over your purchase buttons if the app has not yet fetched products from StoreKit. 
+
 
 
 
 ## Fetching products
 
-To fetch products with StoreKit 2, you can use `StoreKit.Product.products`:
+You can use the native `Product` type to fetch products with StoreKit:
 
 ```swift
 let productIds = ["com.your-app.productid"]
 let products = try await Product.products(for: productIds)
 ```
 
-However, you can also use the StoreKitPlus ``StoreProductService`` protocol and its implementations to fetch products:
+You can also use a ``StoreProductService``, for instance this standard one:
 
 ```swift
 let productIds = ["com.your-app.productid"]
 let context = StoreContext()
 let service = StandardStoreProductService(
-    productIds: productIds,
-    context: context
-)
+    productIds: productIds, 
+    context: context)
 let products = try await service.getProducts()
 ```
 
-The standard service implementations communicate directly with StoreKit and sync the result to the provided ``StoreContext``.
+The standard service communicates with StoreKit and syncs the result with the provided context.
 
 
 
 ## Purchasing products
 
-To purchase products with StoreKit 2, you can use `StoreKit.Product.purchase`:
+You can use the native `Product` type to purchase products with StoreKit:
 
 ```swift
 let result = try await product.purchase()
@@ -79,27 +116,24 @@ switch result {
 return result
 ```
 
-However, purchases involve a bunch of steps and can become pretty complicated. To make things easier, you can use the StoreKitPlus ``StorePurchaseService`` protocol and its implementations to purchase products:
+However, purchases involve a bunch of steps and can become pretty complicated. To make things easier, you can also use a ``StorePurchaseService``, for instance this standard one:
 
 ```swift
 let productIds = ["com.your-app.productid"]
 let context = StoreContext()
-let service = StandardStorePurchaseService(
-    productIds: productIds,
-    context: context
-)
+let service = StandardStorePurchaseService(productIds: productIds, context: context)
 let result = try await service.purchase(product)
 ```
 
-The standard service implementations communicate directly with StoreKit and sync the result to the provided ``StoreContext``.
+The standard service communicates with StoreKit and syncs the result with the provided context.
 
 
 
 ## Restoring purchases
 
-To restore purchase with StoreKit 2, you can use `StoreKit.Transaction.latest(for:)` and verify each transaction to see that it's purchased, not expired and not revoked.
+You can use the native `StoreKit.Product` type to verify transactions and see which ones that are purchased, not expired, not revoked etc.
 
-However, much like with purchases, transactions involve a bunch of steps and can become pretty complicated. To make things easier, you can use the StoreKitPlus ``StorePurchaseService`` protocol and its implementations to restore purchases:
+However, this involves a bunch of steps and can become pretty complicated. To make things easier, you can also use a ``StorePurchaseService``, for instance this standard one:
 
 ```swift
 let productIds = ["com.your-app.productid"]
@@ -111,15 +145,15 @@ let service = StandardStorePurchaseService(
 try await service.restorePurchases()
 ```
 
-The standard service implementations communicate directly with StoreKit and sync the result to the provided ``StoreContext``.
+The standard service communicates with StoreKit and syncs the result with the provided context.
 
 
 
 ## Syncing store data
 
-To perform a full product and purchase sync with StoreKit 2, you can fetch products and transactions from StoreKit.
+To perform a product and purchase sync, you can fetch products and transactions from StoreKit.
 
-However, much like with purchases, this involves a bunch of steps and can become pretty complicated. To make things easier, you can use the StoreKitPlus ``StoreSyncService`` protocol and its implementations to sync store information:
+However, this involves a bunch of steps and can become pretty complicated. To make things easier, you can also use a ``StoreSyncService``, for instance this standard one:
 
 ```swift
 let productIds = ["com.your-app.productid"]
@@ -131,13 +165,13 @@ let service = StandardStoreService(
 try await service.syncStoreData()
 ```
 
-The standard service implementation communicates directly with StoreKit and syncs the result to the provided ``StoreContext``.
+The standard service communicates with StoreKit and syncs the result with the provided context.
 
 
 
 ## Syncing store data on app launch
 
-To sync data when the app launches or is waken up from the background, you can make your app listen to the scene phase change. In SwiftUI, this can be implemented like this:
+To sync data when your app launches or becomes active, you can listen to its scene phase change:
 
 ```swift
 @main
@@ -161,8 +195,7 @@ struct MyApp: App {
 private extension MyApp {
 
     // I use a service provider to resolve services, but you
-    // can create a service directly or use a way that suits
-    // your app. Let's just create one directly in this demo:
+    // can create a service directly, like this:
     var storeService: StoreService {
         let productIds = ["com.your-app.productid"]
         let service = StandardStoreService(
@@ -184,47 +217,8 @@ Since the standard implementations automatically sync changes with the provided 
 
 
 
-## Local product representations
-
-If you want to have a local representation of your StoreKit products, you can use the ``ProductRepresentable`` protocol, which is an easy way to provide identifiable product types that can be matched with real product IDs.
-
-For instance, here we define an app-specific product, where the id:s reflect the real product id:s that are defined in App Store Connect:
-
-```swift
-enum AppProduct: CaseIterable, String, ProductRepresentable {
-
-    case premiumMonthly = "com.myapp.products.premium.monthly"
-    case premiumYearly = "com.myapp.products.premium.yearly"
-
-    var id: String { rawValue }
-}
-```
-
-You can now use this collection to initialize a standard store service:
-
-```swift
-let products = AppProduct.allCases
-let context = StoreContext()
-let service = StandardStoreService(
-    products: products,
-    context: context
-)
-```
-
-You can also match any product collection with a context's purchased product id:s:
-
-```swift
-let products = AppProduct.allCases
-let context = StoreContext()
-let purchased = products.purchased(in: context)
-```
-
-One benefit of using local product representations, is that since the context will persist the id:s of fetched and purchased products, you will be able to check if a product has been purchased or not, even if the app fails to fetch StoreKit transactions.  
-
-However, some operations require that you provide a real StoreKit `Product`, for instance purchasing a product. As such, you may want to display a loading indicator over your purchase buttons if the app has not yet fetched products from StoreKit. 
-
-
-
 ## StoreKit configuration files
 
-StoreKitPlus is just a small layer on top of StoreKit, which means that all the amazing StoreKit tools provided by Xcode works as expected. For instance, StoreKit configuration files work just like when you just use the native StoreKit api.
+StoreKitPlus is just a small layer on top of StoreKit, which means that all the amazing StoreKit tools provided by Xcode works as expected. 
+
+For instance, StoreKit configuration files work just like when you just use the native StoreKit framework.
