@@ -6,6 +6,7 @@
 ### ✨ Features
 
 * `Product` has a new `products(for:)` that uses a product representable collection.
+* `ProductRepresentable` has a new function to fetch all available products in a context.
 
 
 ## 0.2

@@ -27,8 +27,18 @@ public protocol ProductRepresentable: Identifiable {
 public extension Collection where Element: ProductRepresentable {
 
     /**
-     Get all products that have been registered as purchased
-     in a certain ``StoreContext``.
+     Get all products that are available in a ``StoreContext``.
+
+     - Parameters:
+       - context: The context to check.
+     */
+    func available(_ context: StoreContext) -> [Self.Element] {
+        let ids = context.productIds
+        return self.filter { ids.contains($0.id) }
+    }
+
+    /**
+     Get all products that are purchased in a ``StoreContext``.
 
      - Parameters:
        - context: The context to check.
