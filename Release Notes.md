@@ -1,6 +1,13 @@
 # Release notes
 
 
+## 0.2.1
+
+### ✨ Features
+
+* `Product` has a new `products(for:)` that uses a product representable collection.
+
+
 ## 0.2
 
 This release breaks up the `StoreService` protocol into multiple protocols.
