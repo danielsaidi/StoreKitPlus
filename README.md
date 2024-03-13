@@ -18,11 +18,9 @@
 
 ## About StoreKitPlus
 
-StoreKitPlus adds extra functionality for working with StoreKit 2, like extensions, observable state, services, etc.
+StoreKitPlus is a Swift SDK adds extra functionality for working with StoreKit 2, like extensions, observable state, services, etc.
 
 StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, service protocols and classes that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you add a local product representation to your app.
-
-StoreKitPlus supports `iOS 15`, `macOS 12`, `tvOS 15` and `watchOS 8`.
 
 
 
@@ -34,23 +32,17 @@ StoreKitPlus can be installed with the Swift Package Manager:
 https://github.com/danielsaidi/StoreKitPlus.git
 ```
 
-If you prefer to not have external dependencies, you can also just copy the source code into your app.
-
 
 
 ## Getting started
 
-The [online documentation][Documentation] has a [getting started guide][Getting-Started] to help you get started with SystemNotification.
-
-
-
-For more information, see the [getting started guide][Getting-Started].
+The [getting started guide][Getting-Started] helps you get started with StoreKitPlus.
 
 
 
 ## Documentation
 
-The [online documentation][Documentation] contains more information, code examples, etc., and makes it easy to overview the various parts of the library.
+The [online documentation][Documentation] has more information, articles, code examples, etc.
 
 
 
@@ -58,15 +50,13 @@ The [online documentation][Documentation] contains more information, code exampl
 
 This project currently has no demo app, but I will create one if the project gets 100+ stars.
 
-Until then, you can just add a StoreKit configuration file to your app to test it with StoreKitPlus.
 
 
+## Support my work
 
-## Support this library
+You can [sponsor me][Sponsors] on GitHub Sponsors or [reach out][Email] for paid support, to help support my [open-source projects][OpenSource].
 
-I manage my various open-source projects in my free time and am really thankful for any help I can get from the community. 
-
-You can sponsor this project on [GitHub Sponsors][Sponsors] or get in touch for paid support.
+Your support makes it possible for me to put more work into these projects and make them the best they can be.
 
 
 
@@ -87,11 +77,15 @@ StoreKitPlus is available under the MIT license. See the [LICENSE][License] file
 
 
 [Email]: mailto:daniel.saidi@gmail.com
-[Website]: https://www.danielsaidi.com
-[Twitter]: https://www.twitter.com/danielsaidi
+
+[Website]: https://danielsaidi.com
+[GitHub]: https://github.com/danielsaidi
+[Twitter]: https://twitter.com/danielsaidi
 [Mastodon]: https://mastodon.social/@danielsaidi
+[OpenSource]: https://danielsaidi.com/opensource
 [Sponsors]: https://github.com/sponsors/danielsaidi
 
-[Documentation]: https://danielsaidi.github.io/StoreKitPlus/documentation/storekitplus/
+[Documentation]: https://danielsaidi.github.io/StoreKitPlus
 [Getting-Started]: https://danielsaidi.github.io/StoreKitPlus/documentation/storekitplus/getting-started
+
 [License]: https://github.com/danielsaidi/StoreKitPlus/blob/master/LICENSE

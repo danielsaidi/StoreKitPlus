@@ -3,7 +3,7 @@
 //  StoreKitPlus
 //
 //  Created by Daniel Saidi on 2022-06-20.
-//  Copyright © 2022 Daniel Saidi. All rights reserved.
+//  Copyright © 2022-2024 Daniel Saidi. All rights reserved.
 //
 
 import StoreKit
@@ -22,14 +22,12 @@ import StoreKit
  */
 open class StandardStoreService: StoreService {
 
-    /**
-     Create a service instance for the provided `productIds`,
-     that syncs any changes to the provided `context`.
-
-     - Parameters:
-       - productIds: The IDs of the products to handle.
-       - context: The store context to sync with.
-     */
+    /// Create a service instance for the provided IDs, that
+    /// syncs any changes to the provided `context`.
+    ///
+    /// - Parameters:
+    ///   - productIds: The IDs of the products to handle.
+    ///   - context: The store context to sync with.
     public init(
         productIds: [String],
         context: StoreContext = StoreContext()
@@ -43,14 +41,12 @@ open class StandardStoreService: StoreService {
             context: context)
     }
 
-    /**
-     Create a service instance for the provided `products`,
-     that syncs any changes to the provided `context`.
-
-     - Parameters:
-       - products: The products to handle.
-       - context: The store context to sync with.
-     */
+    /// Create a service instance for the provided `products`,
+    /// that syncs any changes to the provided `context`.
+    ///
+    /// - Parameters:
+    ///   - products: The products to handle.
+    ///   - context: The store context to sync with.
     public convenience init<Product: ProductRepresentable>(
         products: [Product],
         context: StoreContext = StoreContext()
@@ -66,34 +62,18 @@ open class StandardStoreService: StoreService {
     private let purchaseService: StorePurchaseService
     private let storeContext: StoreContext
     
-    /**
-     Get all available products.
-     */
     open func getProducts() async throws -> [Product] {
         try await productService.getProducts()
     }
     
-    /**
-     Purchase a certain product.
-
-     - Parameters:
-       - product: The product to purchase.
-     */
     open func purchase(_ product: Product) async throws -> Product.PurchaseResult {
         try await purchaseService.purchase(product)
     }
     
-    /**
-     Restore purchases that are not on this device.
-     */
     open func restorePurchases() async throws {
         try await purchaseService.restorePurchases()
     }
 
-    /**
-     Sync product and purchase information from the store to
-     the provided store context.
-     */
     open func syncStoreData() async throws {
         let products = try await getProducts()
         await updateContext(with: products)

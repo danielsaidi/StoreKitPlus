@@ -1,12 +1,15 @@
 # Release notes
 
 
-## 0.2.1
+## 0.3
+
+StoreKitPlus now uses Swift 5.9, which requires Xcode 15.
 
 ### ✨ Features
 
 * `Product` has a new `products(for:)` that uses a product representable collection.
 * `ProductRepresentable` has a new function to fetch all available products in a context.
+
 
 
 ## 0.2
@@ -27,6 +30,7 @@ This is done to simplify implementing custom services, mocking in unit tests etc
 * `StoreService` now inherits `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
 * `StandardStoreService` now implements `StoreProductService`, `StorePurchaseService` and `StoreSyncService`.
 * `StandardStoreService` now uses nested service implementations to make its own logic easier to overview.
+
 
 
 ## 0.1

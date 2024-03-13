@@ -3,7 +3,7 @@
 //  StoreKitPlus
 //
 //  Created by Daniel Saidi on 2022-08-29.
-//  Copyright © 2022 Daniel Saidi. All rights reserved.
+//  Copyright © 2022-2024 Daniel Saidi. All rights reserved.
 //
 
 import StoreKit
@@ -17,8 +17,6 @@ import StoreKit
  */
 public protocol StoreSyncService: AnyObject {
 
-    /**
-     Sync StoreKit product and purchase information.
-     */
+    /// Sync StoreKit product and purchase information.
     func syncStoreData() async throws
 }

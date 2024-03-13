@@ -3,7 +3,7 @@
 //  StoreKitPlus
 //
 //  Created by Daniel Saidi on 2022-08-29.
-//  Copyright © 2022 Daniel Saidi. All rights reserved.
+//  Copyright © 2022-2024 Daniel Saidi. All rights reserved.
 //
 
 import StoreKit
@@ -17,16 +17,9 @@ import StoreKit
  */
 public protocol StorePurchaseService: AnyObject {
 
-    /**
-     Purchase a certain product.
-
-     - Parameters:
-       - product: The product to purchase.
-     */
+    /// Purchase the provided product.
     func purchase(_ product: Product) async throws -> Product.PurchaseResult
 
-    /**
-     Restore previous purchases.
-     */
+    /// Restore all purchases that are not synced to the app.
     func restorePurchases() async throws
 }

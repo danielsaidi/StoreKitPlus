@@ -3,7 +3,7 @@
 //  StoreKitPlus
 //
 //  Created by Daniel Saidi on 2022-06-20.
-//  Copyright © 2022 Daniel Saidi. All rights reserved.
+//  Copyright © 2022-2024 Daniel Saidi. All rights reserved.
 //
 
 import Foundation
@@ -26,23 +26,13 @@ public protocol ProductRepresentable: Identifiable {
 
 public extension Collection where Element: ProductRepresentable {
 
-    /**
-     Get all products that are available in a ``StoreContext``.
-
-     - Parameters:
-       - context: The context to check.
-     */
+    /// Get all products available in a ``StoreContext``.
     func available(_ context: StoreContext) -> [Self.Element] {
         let ids = context.productIds
         return self.filter { ids.contains($0.id) }
     }
 
-    /**
-     Get all products that are purchased in a ``StoreContext``.
-
-     - Parameters:
-       - context: The context to check.
-     */
+    /// Get all products purchased in a ``StoreContext``.
     func purchased(in context: StoreContext) -> [Self.Element] {
         let ids = context.purchasedProductIds
         return self.filter { ids.contains($0.id) }
