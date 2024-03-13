@@ -5,6 +5,8 @@
 
 StoreKitPlus now uses Swift 5.9, which requires Xcode 15.
 
+This version also adds support for visionOS, although the purchase operation doesn't work.
+
 ### ✨ Features
 
 * `Product` has a new `products(for:)` that uses a product representable collection.
