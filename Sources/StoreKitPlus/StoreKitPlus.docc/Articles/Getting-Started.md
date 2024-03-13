@@ -2,6 +2,17 @@
 
 This article describes how you get started with StoreKitPlus.
 
+@Metadata {
+
+    @PageImage(
+        purpose: card,
+        source: "Page",
+        alt: "Page icon"
+    )
+
+    @PageColor(blue)
+}
+
 
 ## Services
 
@@ -131,9 +142,9 @@ The standard service communicates with StoreKit and syncs the result with the pr
 
 ## Restoring purchases
 
-You can use the native `StoreKit.Product` type to verify transactions and see which ones that are purchased, not expired, not revoked etc.
+You can use the native `StoreKit.Product` to verify transactions and see which that are purchased, not expired, not revoked etc.
 
-However, this involves a bunch of steps and can become pretty complicated. To make things easier, you can also use a ``StorePurchaseService``, for instance this standard one:
+However, this involves many steps and can become pretty complicated. To make things easier, you can also use a ``StorePurchaseService``, for instance this standard one:
 
 ```swift
 let productIds = ["com.your-app.productid"]
@@ -213,12 +224,12 @@ private extension MyApp {
 }
 ```
 
-Since the standard implementations automatically sync changes with the provided context, injecting the context as an environment object will make the global state available to the entire app.
+Since the standard implementations automatically sync changes to the provided context, injecting the context as an environment object will make the global state available to the entire app.
 
 
 
 ## StoreKit configuration files
 
-StoreKitPlus is just a small layer on top of StoreKit, which means that all the amazing StoreKit tools provided by Xcode works as expected. 
+StoreKitPlus is just a small layer on top of StoreKit, which means that all the amazing tools provided by Xcode works as expected. 
 
 For instance, StoreKit configuration files work just like when you just use the native StoreKit framework.
