@@ -1,5 +1,5 @@
 <p align="center">
-    <img src ="Resources/Logo_GitHub.png" alt="StoreKitPlus Logo" title="StoreKitPlus" width=600 />
+    <img src ="Resources/Logo_GitHub.png" alt="StoreKitPlus Logo" title="StoreKitPlus" />
 </p>
 
 <p align="center">
