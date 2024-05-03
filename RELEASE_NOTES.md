@@ -1,6 +1,12 @@
 # Release notes
 
 
+## 0.3.1
+
+This version fixes an async error that could cause purchases to update the context on a background thread. 
+
+
+
 ## 0.3
 
 StoreKitPlus now uses Swift 5.9, which requires Xcode 15.

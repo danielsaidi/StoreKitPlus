@@ -38,7 +38,9 @@ open class StandardStorePurchaseService: StorePurchaseService {
     private let context: StoreContext
     private var transactionTask: Task<Void, Error>?
 
-    open func purchase(_ product: Product) async throws -> Product.PurchaseResult {
+    open func purchase(
+        _ product: Product
+    ) async throws -> Product.PurchaseResult {
         #if os(visionOS)
         throw StoreServiceError.unsupportedPlatform("This purchase operation is not supported in visionOS: Use @Environment(\\.purchase) instead.")
         #else
@@ -114,10 +116,12 @@ private extension StandardStorePurchaseService {
         var transactions = context.purchaseTransactions
             .filter { $0.productID != transaction.productID }
         transactions.append(transaction)
-        context.purchaseTransactions = transactions
+        updateContext(with: transactions)
     }
 
     func updateContext(with transactions: [Transaction]) {
-        context.purchaseTransactions = transactions
+        DispatchQueue.main.async {
+            self.context.purchaseTransactions = transactions
+        }
     }
 }
