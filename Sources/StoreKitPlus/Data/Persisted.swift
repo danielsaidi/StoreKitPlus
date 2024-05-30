@@ -8,15 +8,8 @@
 
 import Foundation
 
-/**
- This property wrapper automatically persists any new values
- to user defaults and sets the initial property value to the
- last persisted value or a fallback value.
- 
- This type is internal and only serves the library. Consider
- using the `SwiftUIKit` version if you want to use this type
- in your own apps and libraries.
- */
+/// This property wrapper automatically persists a new value
+/// to user defaults.
 @propertyWrapper
 struct Persisted<T: Codable> {
     

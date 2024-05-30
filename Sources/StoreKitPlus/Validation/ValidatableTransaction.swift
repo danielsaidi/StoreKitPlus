@@ -8,15 +8,11 @@
 
 import StoreKit
 
-/**
- This protocol can be implemented by store transactions that
- can be validated.
-
- Valid transactions have no revocation date and also have no
- expiration date that has passed.
-
- This type is implemented by the StoreKit `Translation` type.
- */
+/// This protocol can be implemented by any transaction that
+/// can be validated.
+///
+/// Valid transactions have no revocation date and also have
+/// expired expiration date.
 public protocol ValidatableTransaction {
 
     /// The date, if any, when the transaction expired.

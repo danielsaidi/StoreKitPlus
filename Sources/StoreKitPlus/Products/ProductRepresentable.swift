@@ -8,17 +8,15 @@
 
 import Foundation
 
-/**
- This protocol can be implemented by types that are intended
- to represent an app's StoreKit products.
-
- This protocl can be used to provide a local product catalog
- that uses the same product IDs as the real StoreKit product
- catalog. This can be used to provide any additional product
- information, unit test product logic, present products even
- if the app is unable to sync with StoreKit, e.g. when it is
- offline, etc.
- */
+/// This protocol can be implemented by types that should be
+/// able to represent an app's StoreKit products.
+///
+/// This protocol can be used to define a local product that
+/// uses the same product ID as a real StoreKit product. The
+/// local product can then be used to provide any additional
+/// information, unit test product-based logic, present your
+/// products even if the app is unable to sync with StoreKit,
+/// e.g. when it is offline, etc.
 public protocol ProductRepresentable: Identifiable {
 
     var id: ProductID { get }

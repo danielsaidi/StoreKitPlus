@@ -15,15 +15,18 @@ let package = Package(
         .library(
             name: "StoreKitPlus",
             targets: ["StoreKitPlus"]
-        ),
+        )
     ],
-    dependencies: [],
     targets: [
         .target(
             name: "StoreKitPlus",
-            dependencies: []),
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency")
+            ]
+        ),
         .testTarget(
             name: "StoreKitPlusTests",
-            dependencies: ["StoreKitPlus"]),
+            dependencies: ["StoreKitPlus"]
+        )
     ]
 )

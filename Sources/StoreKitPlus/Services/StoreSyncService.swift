@@ -8,13 +8,8 @@
 
 import StoreKit
 
-/**
- This protocol can be implemented by any classes that can be
- used to sync StoreKit purchase and product information.
-
- The protocol is implemented by ``StandardStoreService``, so
- you can use it to get a standard implementation.
- */
+/// This protocol can be implemented by any classes that can
+/// be used to sync StoreKit purchase & product information.
 public protocol StoreSyncService: AnyObject {
 
     /// Sync StoreKit product and purchase information.

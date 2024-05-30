@@ -8,13 +8,8 @@
 
 import StoreKit
 
-/**
- This protocol can be implemented by any classes that can be
- used to retrieve StoreKit products.
-
- The protocol is implemented by ``StandardStoreService`` and
- ``StandardStoreProductService``.
- */
+/// This protocol can be implemented by any classes that can
+/// be used to retrieve StoreKit products.
 public protocol StoreProductService: AnyObject {
 
     /// Get all available products.

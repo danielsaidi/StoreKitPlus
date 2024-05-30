@@ -8,13 +8,8 @@
 
 import StoreKit
 
-/**
- This protocol can be implemented by any classes that can be
- used to perform StoreKit product purchase operations.
-
- The protocol is implemented by ``StandardStoreService`` and
- ``StandardStorePurchaseService``.
- */
+/// This protocol can be implemented by any classes that can
+/// be used to perform StoreKit product purchase operations.
 public protocol StorePurchaseService: AnyObject {
 
     /// Purchase the provided product.

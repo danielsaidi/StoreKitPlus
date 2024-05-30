@@ -8,18 +8,15 @@
 
 import StoreKit
 
-/**
- This service class implements the ``StoreService`` protocol
- and can be used to integrate with StoreKit.
- 
- The service keeps products and purchases in sync, using the
- provided ``StoreContext``. This can be used by e.g. SwiftUI
- apps, to observe context changes to drive the UI.
- 
- You can configure your app to use this service with a local
- product collection, by adding a StoreKit configuration file
- to the app.
- */
+/// This class implements the ``StoreService`` protocol, and
+/// can be used to integrate with StoreKit.
+///
+/// This service keeps products and purchases in sync, using
+/// the provided ``StoreContext`` and can be used by SwiftUI
+/// based apps, to observe context changes.
+///
+/// You can use this service with a local product collection,
+/// by adding a StoreKit configuration file to the app.
 open class StandardStoreService: StoreService {
 
     /// Create a service instance for the provided IDs, that
