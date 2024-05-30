@@ -84,7 +84,7 @@ private extension StandardStorePurchaseService {
 
     /// Handle the transaction in the provided result.
     func handleTransaction(_ result: VerificationResult<Transaction>) async throws {
-        let transaction = try verifyTransaction(result)
+        let transaction = try result.verify()
         await updateContext(with: transaction)
         await transaction.finish()
     }
@@ -103,6 +103,16 @@ private extension StandardStorePurchaseService {
     /// Verify the transaction in the provided `result`.
     func verifyTransaction(_ result: VerificationResult<Transaction>) throws -> Transaction {
         switch result {
+        case .unverified(let transaction, let error): throw StoreServiceError.invalidTransaction(transaction, error)
+        case .verified(let transaction): return transaction
+        }
+    }
+}
+
+private extension VerificationResult where SignedType == Transaction {
+
+    func verify() throws -> Transaction {
+        switch self {
         case .unverified(let transaction, let error): throw StoreServiceError.invalidTransaction(transaction, error)
         case .verified(let transaction): return transaction
         }

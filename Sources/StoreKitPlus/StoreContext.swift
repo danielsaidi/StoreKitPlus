@@ -83,7 +83,7 @@ public class StoreContext: ObservableObject {
     ///
     /// This property is persisted, which means that you can
     /// map these IDs to a local product representation when
-    /// a StoreKit request fails. 
+    /// a StoreKit request fails.
     @Published
     public internal(set) var purchasedProductIds: [String] = [] {
         willSet { persistedPurchasedProductIds = newValue }
