@@ -25,15 +25,19 @@ open class StandardStoreService: StoreService {
     /// - Parameters:
     ///   - productIds: The IDs of the products to handle.
     ///   - context: The store context to sync with.
+    ///   - productService: A custom product service to use, if any.
+    ///   - purchaseService: A custom purchase service to use, if any.
     public init(
         productIds: [String],
-        context: StoreContext = StoreContext()
+        context: StoreContext = StoreContext(),
+        productService: StoreProductService? = nil,
+        purchaseService: StorePurchaseService? = nil
     ) {
         self.productIds = productIds
         self.storeContext = context
-        self.productService = StandardStoreProductService(
+        self.productService = productService ?? StandardStoreProductService(
             productIds: productIds)
-        self.purchaseService = StandardStorePurchaseService(
+        self.purchaseService = purchaseService ?? StandardStorePurchaseService(
             productIds: productIds,
             context: context)
     }
@@ -44,13 +48,19 @@ open class StandardStoreService: StoreService {
     /// - Parameters:
     ///   - products: The products to handle.
     ///   - context: The store context to sync with.
+    ///   - productService: A custom product service to use, if any.
+    ///   - purchaseService: A custom purchase service to use, if any.
     public convenience init<Product: ProductRepresentable>(
         products: [Product],
-        context: StoreContext = StoreContext()
+        context: StoreContext = StoreContext(),
+        productService: StoreProductService? = nil,
+        purchaseService: StorePurchaseService? = nil
     ) {
         self.init(
             productIds: products.map { $0.id },
-            context: context
+            context: context,
+            productService: productService,
+            purchaseService: purchaseService
         )
     }
     

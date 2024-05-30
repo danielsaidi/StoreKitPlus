@@ -1,5 +1,17 @@
 # Release notes
 
+StoreKitPlus will use semver after 1.0. 
+
+Until then, deprecated features may be removed in any minor version.
+
+
+## 0.3.2
+
+### ✨ Features
+
+* `StandardProductSerice` now lets you inject custom services, if needed.
+
+
 
 ## 0.3.1
 
