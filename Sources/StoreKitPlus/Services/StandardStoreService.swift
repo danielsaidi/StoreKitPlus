@@ -34,12 +34,11 @@ public extension StoreService where Self == StandardStoreService {
 /// This class implements the ``StoreService`` protocol, and
 /// can be used to integrate with StoreKit.
 ///
-/// This service keeps products and purchases in sync, using
-/// the provided ``StoreContext`` and can be used by SwiftUI
-/// based apps, to observe context changes.
-///
 /// You can use this service with a local product collection,
 /// by adding a StoreKit configuration file to the app.
+///
+/// You can use the two ``StoreService/standard(products:)``
+/// shorthands to easily create a standard service instance.
 open class StandardStoreService: StoreService {
 
     /// Create a service instance for the provided IDs.

@@ -15,7 +15,7 @@ import StoreKit
 /// Although some operations can be performed directly using
 /// StoreKit like `Product.products(for:)`, the service lets
 /// you customize any part of the StoreKit integration.
-public protocol StoreService: StoreSyncService {
+public protocol StoreService {
 
     /// Get all available products.
     func getProducts() async throws -> [Product]

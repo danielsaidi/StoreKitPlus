@@ -14,35 +14,21 @@ This article describes how you get started with StoreKitPlus.
 }
 
 
-## Services
-
 StoreKitPlus has services and observable state that help you integrate with StoreKit.
 
- * ``StoreProductService`` can be implemented by types that can fetch StoreKit products.
- * ``StorePurchaseService`` can be implemented by types that can purchase StoreKit products.
- * ``StoreSyncService`` can be implemented by types that can sync purchases and products.
 
-There is also a ``StoreService`` protocol that implements all these protocols, for when you want a single service to do everything.
 
-``StandardStoreProductService``, ``StandardStorePurchaseService`` and ``StandardStoreService`` implement these protocols and can be subclassed to customize their behavior.
+## Services
+
+A ``StoreService`` can be used to integrate with StoreKit, such as fetching and purchasing products, restoring purchases, etc. 
+
+You can use the ``StandardStoreService`` as is, or subclass it to make modifications to any part of the StoreKit integration.
 
 
 
 ## Observable state
 
-StoreKitPlus has an observable ``StoreContext`` that keeps track of the available and purchased products for an app. It can be injected into the store services to automatically be kept in sync.
-
-For instance, injecting a context into a ``StandardStoreService`` and calling ``StoreSyncService/syncStoreData()`` will automatically write products and transactions to the context:
-
-```swift
-let productIds = ["com.your-app.productid"]
-let context = StoreContext()
-let service = StandardStoreService(
-    productIds: productIds,
-    context: context
-)
-try await service.syncStoreData()
-```
+StoreKitPlus has an observable ``StoreContext`` that keeps track of the available and purchased products for an app. It can be injected into the store service's functions to automatically keep it in sync.
 
 Although StoreKit products and transactions are not codable, this context will persist products and purchases by their ID, which means that you can use local product representations to keep track of products and purchases in your app.
 
@@ -87,7 +73,6 @@ Since some operations require real StoreKit `Product` values, you should display
 
 
 
-
 ## Fetching products
 
 You can use the native `Product` type to fetch products with StoreKit:
@@ -97,18 +82,15 @@ let productIds = ["com.your-app.productid"]
 let products = try await Product.products(for: productIds)
 ```
 
-You can also use a ``StoreProductService``, for instance this standard one:
+You can also use a ``StoreService``, for instance this standard one:
 
 ```swift
-let productIds = ["com.your-app.productid"]
-let context = StoreContext()
-let service = StandardStoreProductService(
-    productIds: productIds, 
-    context: context)
+let ids = ["com.your-app.productid"]
+let service = StandardStoreService(productIds: ids)
 let products = try await service.getProducts()
 ```
 
-The standard service communicates with StoreKit and syncs the result with the provided context.
+You can subclass ``StandardStoreService`` to customize the fetch operation.
 
 
 
@@ -127,16 +109,15 @@ switch result {
 return result
 ```
 
-However, purchases involve a bunch of steps and can become pretty complicated. To make things easier, you can also use a ``StorePurchaseService``, for instance this standard one:
+Since purchases involve a bunch of steps and can become complicated, you can also use a ``StoreService``:
 
 ```swift
-let productIds = ["com.your-app.productid"]
-let context = StoreContext()
-let service = StandardStorePurchaseService(productIds: productIds, context: context)
+let ids = ["com.your-app.productid"]
+let service = StandardStorePurchaseService(productIds: ids)
 let result = try await service.purchase(product)
 ```
 
-The standard service communicates with StoreKit and syncs the result with the provided context.
+The ``StandardStoreService`` will automatically verify and finish the purchase transactions.
 
 
 
@@ -144,15 +125,11 @@ The standard service communicates with StoreKit and syncs the result with the pr
 
 You can use the native `StoreKit.Product` to verify transactions and see which that are purchased, not expired, not revoked etc.
 
-However, this involves many steps and can become pretty complicated. To make things easier, you can also use a ``StorePurchaseService``, for instance this standard one:
+However, this involves many steps and can become complicated. To make things easier, you can also use a ``StoreService``:
 
 ```swift
-let productIds = ["com.your-app.productid"]
-let context = StoreContext()
-let service = StandardStorePurchaseService(
-    productIds: productIds,
-    context: context
-)
+let ids = ["com.your-app.productid"]
+let service = StandardStorePurchaseService(productIds: ids)
 try await service.restorePurchases()
 ```
 
@@ -164,16 +141,13 @@ The standard service communicates with StoreKit and syncs the result with the pr
 
 To perform a product and purchase sync, you can fetch products and transactions from StoreKit.
 
-However, this involves a bunch of steps and can become pretty complicated. To make things easier, you can also use a ``StoreSyncService``, for instance this standard one:
+Using a ``StoreService`` lets you easily sync all data to a ``StoreContext``:
 
 ```swift
-let productIds = ["com.your-app.productid"]
+let ids = ["com.your-app.productid"]
 let context = StoreContext()
-let service = StandardStoreService(
-    productIds: productIds,
-    context: context
-)
-try await service.syncStoreData()
+let service = StandardStoreService(productIds: ids)
+try await service.syncStoreData(to: context)
 ```
 
 The standard service communicates with StoreKit and syncs the result with the provided context.
@@ -189,7 +163,7 @@ To sync data when your app launches or becomes active, you can listen to its sce
 struct MyApp: App {
 
     @StateObject
-    private var storeContext = StoreContext()
+    private var context = StoreContext()
 
     @Environment(\.scenePhase)
     private var scenePhase
@@ -198,33 +172,24 @@ struct MyApp: App {
         WindowGroup {
             RootView()
                 .onChange(of: scenePhase, perform: syncStoreData)
-                .environmentObject(storeContext)
         }
     }
 }
 
 private extension MyApp {
 
-    // I use a service provider to resolve services, but you
-    // can create a service directly, like this:
-    var storeService: StoreService {
-        let productIds = ["com.your-app.productid"]
-        let service = StandardStoreService(
-            productIds: productIds,
-            context: storeContext
-        )
-    }
-
     func syncStoreData(for phase: ScenePhase) {
-        guard phase == .active else { return 
+        guard phase == .active else { return }
+        let ids = ["com.your-app.productid"]
+        let service = StandardStoreService(productIds: ids)
         Task {
-            try await storeService.syncStoreData()
+            try await storeService.syncStoreData(to: context)
         }
     }
 }
 ```
 
-Since the standard implementations automatically sync changes to the provided context, injecting the context as an environment object will make the global state available to the entire app.
+You can inject the context as an `EnvironmentObject` to make the global state available to the entire app.
 
 
 

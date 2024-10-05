@@ -8,9 +8,9 @@ StoreKitPlus is a Swift SDK that adds extra functionality for working with Store
 
 ![StoreKitPlus logo](Logo.png)
 
-StoreKitPlus is a Swift SDK that adds extra functionality for working with StoreKit 2, like extensions, observable state, services, etc.
+StoreKitPlus is a Swift SDK that makes it easy to integrate with StoreKit 2.
 
-StoreKitPlus has an observable ``StoreContext`` that lets you observe state, service protocols and classes that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you add a local product representation to your app.
+StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, services that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you use local product representations in your app.
 
 
 
@@ -53,22 +53,14 @@ StoreKitPlus is available under the MIT license.
 - ``StoreContext``
 - ``StoreService``
 - ``StandardStoreService``
+- ``StoreServiceError``
 
 ### Products
 
 - ``ProductID``
 - ``ProductRepresentable``
 
-### Services
-
-- ``StandardStoreProductService``
-- ``StandardStorePurchaseService``
-- ``StoreProductService``
-- ``StorePurchaseService``
-- ``StoreSyncService``
-- ``StoreServiceError``
-
-### Validation
+### Transactions
 
 - ``ValidatableTransaction``
 

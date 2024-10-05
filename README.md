@@ -4,7 +4,7 @@
 
 <p align="center">
         <img src="https://img.shields.io/github/v/release/danielsaidi/StoreKitPlus?color=%2300550&sort=semver" alt="Version" />
-    <img src="https://img.shields.io/badge/Swift-5.6-orange.svg" alt="Swift 5.6" />
+    <img src="https://img.shields.io/badge/Swift-6.0-orange.svg" alt="Swift 6.0" />
     <img src="https://img.shields.io/badge/platform-SwiftUI-blue.svg" alt="Swift UI" title="Swift UI" />
     <img src="https://img.shields.io/github/license/danielsaidi/StoreKitPlus" alt="MIT License" />
         <a href="https://twitter.com/danielsaidi">
@@ -18,9 +18,9 @@
 
 ## About StoreKitPlus
 
-StoreKitPlus is a Swift SDK that adds extra functionality for working with StoreKit 2, like extensions, observable state, services, etc.
+StoreKitPlus is a Swift SDK that makes it easy to integrate with StoreKit 2.
 
-StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, service protocols and classes that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you add a local product representation to your app.
+StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, services that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you use local product representations in your app.
 
 
 
@@ -36,19 +36,13 @@ https://github.com/danielsaidi/StoreKitPlus.git
 
 ## Getting started
 
-The [getting started guide][Getting-Started] helps you get started with StoreKitPlus.
+See the online [getting started guide][Getting-Started] for information on how to get started.
 
 
 
 ## Documentation
 
-The [online documentation][Documentation] has more information, articles, code examples, etc.
-
-
-
-## Demo Application
-
-This project currently has no demo app, but I will create one if the project gets 100+ stars.
+The online [documentation][Documentation] has more information, articles, code examples, etc.
 
 
 
