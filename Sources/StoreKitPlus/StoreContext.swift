@@ -125,3 +125,34 @@ private extension StoreContext {
     
     static func key(_ name: String) -> String { "com.danielsaidi.storekitplus.\(name)" }
 }
+
+/// This property wrapper automatically persists a new value
+/// to user defaults.
+@propertyWrapper
+struct Persisted<T: Codable> {
+
+    init(
+        key: String,
+        store: UserDefaults = .standard,
+        defaultValue: T) {
+        self.key = key
+        self.store = store
+        self.defaultValue = defaultValue
+    }
+
+    private let key: String
+    private let store: UserDefaults
+    private let defaultValue: T
+
+    var wrappedValue: T {
+        get {
+            guard let data = store.object(forKey: key) as? Data else { return defaultValue }
+            let value = try? JSONDecoder().decode(T.self, from: data)
+            return value ?? defaultValue
+        }
+        set {
+            let data = try? JSONEncoder().encode(newValue)
+            store.set(data, forKey: key)
+        }
+    }
+}

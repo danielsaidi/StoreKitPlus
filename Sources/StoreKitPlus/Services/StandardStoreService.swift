@@ -70,9 +70,10 @@ open class StandardStoreService: StoreService {
         try await Product.products(for: productIds)
     }
 
+    @discardableResult
     open func purchase(
         _ product: Product
-    ) async throws -> Product.PurchaseResult {
+    ) async throws -> (Product.PurchaseResult, Transaction?) {
         #if os(visionOS)
         throw StoreServiceError.unsupportedPlatform("This purchase operation is not supported in visionOS: Use @Environment(\\.purchase) instead.")
         #else
@@ -83,7 +84,7 @@ open class StandardStoreService: StoreService {
         case .userCancelled: break
         @unknown default: break
         }
-        return result
+        return (result, nil)
         #endif
     }
     
