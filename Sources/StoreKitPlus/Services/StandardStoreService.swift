@@ -8,6 +8,29 @@
 
 import StoreKit
 
+public extension StoreService where Self == StandardStoreService {
+
+    /// Create a service instance for the provided IDs.
+    ///
+    /// - Parameters:
+    ///   - productIds: The IDs of the products to handle.
+    static func standard(
+        productIds: [String]
+    ) -> Self {
+        .init(productIds: productIds)
+    }
+
+    /// Create a service instance for the provided products.
+    ///
+    /// - Parameters:
+    ///   - products: The products to handle.
+    static func standard<Product: ProductRepresentable>(
+        products: [Product]
+    ) -> Self {
+        .init(products: products)
+    }
+}
+
 /// This class implements the ``StoreService`` protocol, and
 /// can be used to integrate with StoreKit.
 ///
@@ -30,8 +53,7 @@ open class StandardStoreService: StoreService {
         updateTransactionsOnLaunch()
     }
 
-    /// Create a service instance for the provided `products`,
-    /// that syncs any changes to the provided `context`.
+    /// Create a service instance for the provided products.
     ///
     /// - Parameters:
     ///   - products: The products to handle.
@@ -49,7 +71,9 @@ open class StandardStoreService: StoreService {
         try await Product.products(for: productIds)
     }
 
-    open func purchase(_ product: Product) async throws -> Product.PurchaseResult {
+    open func purchase(
+        _ product: Product
+    ) async throws -> Product.PurchaseResult {
         #if os(visionOS)
         throw StoreServiceError.unsupportedPlatform("This purchase operation is not supported in visionOS: Use @Environment(\\.purchase) instead.")
         #else
@@ -75,7 +99,9 @@ open class StandardStoreService: StoreService {
         return transactions
     }
 
-    open func syncStoreData(to context: StoreContext) async throws {
+    open func syncStoreData(
+        to context: StoreContext
+    ) async throws {
         let products = try await getProducts()
         await context.updateProducts(products)
         try await restorePurchases()

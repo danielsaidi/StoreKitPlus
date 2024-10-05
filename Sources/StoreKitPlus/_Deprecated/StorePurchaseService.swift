@@ -11,8 +11,5 @@ import StoreKit
 @available(*, deprecated, message: "Just use StoreService instead.")
 public protocol StorePurchaseService: AnyObject {
 
-    func purchase(_ product: Product) async throws -> Product.PurchaseResult
-
-    @discardableResult
-    func restorePurchases() async throws -> [Transaction]
+    
 }

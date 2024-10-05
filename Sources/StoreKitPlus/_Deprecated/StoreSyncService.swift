@@ -8,16 +8,15 @@
 
 import StoreKit
 
-/// This protocol can be implemented by any classes that can
-/// be used to sync StoreKit purchase & product information.
+@available(*, deprecated, message: "Just use StoreService instead.")
 public protocol StoreSyncService: AnyObject {
 
-    /// Sync StoreKit product and purchase information to a context.
     func syncStoreData(
         to context: StoreContext
     ) async throws
 }
 
+@available(*, deprecated, message: "Just use StoreService instead.")
 public extension StoreSyncService {
 
     @available(*, deprecated, message: "You have to pass in a context now.")

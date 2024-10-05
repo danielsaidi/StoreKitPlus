@@ -13,17 +13,18 @@ This version makes StoreKitPlus use Swift 6.
 
 As a result of the Swift 6 transition, and due to data race problems, the store services no longer takes a context and keeps it in sync. This must be explicitly handled by the caller.
 
-Furthermore, the service model is drastically simplified in this version. Instead of having multiple service types, `StoreService` handles it all. Instead of composition, you can override any open function to modify the service behavior.
+Furthermore, the service model is drastically simplified in this version. Instead of having multiple service types, `StoreService` handles it all.
 
 ### ✨ Features
 
-* `StandardProductService` no longer accepts a context, and will no longer keep it in sync.
-* `StandardProductPurchaseService` no longer accepts a context, and will no longer keep it in sync.
+* `StoreService` has new `.standard` shorthands.
+* `StandardStoreService` no longer accepts a context, and will no longer keep it in sync.
 
 ### 🗑️ Deprecations
 
-* `StoreProductService` has been deprecated - just use `StoreService` instead.
-* `StorePurchaseService` has been deprecated - just use `StoreService` instead.
+* `StoreProductService` has been deprecated.
+* `StorePurchaseService` has been deprecated.
+* `StoreSyncService` has been deprecated.
 
 
 
