@@ -14,18 +14,14 @@ import StoreKit
 /// that can also be used to observe changes to drive the UI.
 open class StandardStorePurchaseService: StorePurchaseService {
 
-    /// Create a service instance for the provided IDs, that
-    /// syncs transactions to the provided `context`.
+    /// Create a service instance for the provided IDs.
     ///
     /// - Parameters:
     ///   - productIds: The IDs of the products to fetch.
-    ///   - context: The store context to sync with.
     public init(
-        productIds: [String],
-        context: StoreContext = StoreContext()
+        productIds: [String]
     ) {
         self.productIds = productIds
-        self.context = context
         self.transactionTask = nil
         self.transactionTask = getTransactionListenerTask()
     }
@@ -34,10 +30,17 @@ open class StandardStorePurchaseService: StorePurchaseService {
         self.transactionTask = nil
     }
 
+
     private let productIds: [String]
-    private let context: StoreContext
     private var transactionTask: Task<Void, Error>?
 
+
+    /// Purchase the provided product.
+    ///
+    /// If the purchase operation is successful, the service
+    /// will verify the result and finish the transaction. A
+    /// subclass of this class can customize these steps, by
+    /// overriding the various open classes.
     open func purchase(
         _ product: Product
     ) async throws -> Product.PurchaseResult {
@@ -46,7 +49,7 @@ open class StandardStorePurchaseService: StorePurchaseService {
         #else
         let result = try await product.purchase()
         switch result {
-        case .success(let result): try await handleTransaction(result)
+        case .success(let result): try await finalizePurchaseResult(result)
         case .pending: break
         case .userCancelled: break
         @unknown default: break
@@ -54,9 +57,39 @@ open class StandardStorePurchaseService: StorePurchaseService {
         return result
         #endif
     }
-    
-    open func restorePurchases() async throws {
-        try await syncTransactions()
+
+    @discardableResult
+    open func restorePurchases() async throws -> [Transaction] {
+        var transactions: [Transaction] = []
+        for id in productIds {
+            if let transaction = try await getValidTransaction(for: id) {
+                transactions.append(transaction)
+            }
+        }
+        return transactions
+    }
+
+
+    // MARK: - Open functions
+
+    /// Finalize a purchase result from a ``purchase(_:)``.
+    open func finalizePurchaseResult(
+        _ result: VerificationResult<Transaction>
+    ) async throws {
+        let transaction = try result.verify()
+        await transaction.finish()
+    }
+
+    /// Try to resolve a valid transaction for a certain ID.
+    ///
+    /// This function will fetch and verify all transactions
+    /// before returning them.
+    open func getValidTransaction(
+        for productId: ProductID
+    ) async throws -> Transaction? {
+        guard let latest = await Transaction.latest(for: productId) else { return nil }
+        let result = try latest.verify()
+        return result.isValid ? result : nil
     }
 }
 
@@ -67,71 +100,22 @@ private extension StandardStorePurchaseService {
         Task.detached {
             for await result in Transaction.updates {
                 do {
-                    try await self.handleTransaction(result)
+                    try result.verify()
                 } catch {
                     print("Transaction listener error: \(error)")
                 }
             }
         }
     }
-
-    /// Try to resolve a valid transaction for a certain ID.
-    func getValidTransaction(for productId: ProductID) async throws -> Transaction? {
-        guard let latest = await Transaction.latest(for: productId) else { return nil }
-        let result = try verifyTransaction(latest)
-        return result.isValid ? result : nil
-    }
-
-    /// Handle the transaction in the provided result.
-    func handleTransaction(_ result: VerificationResult<Transaction>) async throws {
-        let transaction = try result.verify()
-        await updateContext(with: transaction)
-        await transaction.finish()
-    }
-
-    /// Sync the transactions of all available products.
-    func syncTransactions() async throws {
-        var transactions: [Transaction] = []
-        for id in productIds {
-            if let transaction = try await getValidTransaction(for: id) {
-                transactions.append(transaction)
-            }
-        }
-        await updateContext(with: transactions)
-    }
-
-    /// Verify the transaction in the provided `result`.
-    func verifyTransaction(_ result: VerificationResult<Transaction>) throws -> Transaction {
-        switch result {
-        case .unverified(let transaction, let error): throw StoreServiceError.invalidTransaction(transaction, error)
-        case .verified(let transaction): return transaction
-        }
-    }
 }
 
 private extension VerificationResult where SignedType == Transaction {
 
+    @discardableResult
     func verify() throws -> Transaction {
         switch self {
         case .unverified(let transaction, let error): throw StoreServiceError.invalidTransaction(transaction, error)
         case .verified(let transaction): return transaction
-        }
-    }
-}
-
-@MainActor
-private extension StandardStorePurchaseService {
-
-    func updateContext(with transaction: Transaction) {
-        var transactions = context.purchaseTransactions
-            .filter { $0.productID != transaction.productID }
-        transactions.append(transaction)
-        updateContext(with: transactions)
-    }
-
-    func updateContext(with transactions: [Transaction]) {
-        DispatchQueue.main.async {
-            self.context.purchaseTransactions = transactions
         }
     }
 }

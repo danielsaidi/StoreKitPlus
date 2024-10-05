@@ -15,6 +15,7 @@ public protocol StorePurchaseService: AnyObject {
     /// Purchase the provided product.
     func purchase(_ product: Product) async throws -> Product.PurchaseResult
 
-    /// Restore all purchases that are not synced to the app.
-    func restorePurchases() async throws
+    /// Restore all purchases and get the valid transactions.
+    @discardableResult
+    func restorePurchases() async throws -> [Transaction]
 }

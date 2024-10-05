@@ -12,6 +12,16 @@ import StoreKit
 /// be used to sync StoreKit purchase & product information.
 public protocol StoreSyncService: AnyObject {
 
-    /// Sync StoreKit product and purchase information.
-    func syncStoreData() async throws
+    /// Sync StoreKit product and purchase information to a context.
+    func syncStoreData(
+        to context: StoreContext
+    ) async throws
+}
+
+public extension StoreSyncService {
+
+    @available(*, deprecated, message: "You have to pass in a context now.")
+    func syncStoreData() async throws {
+        try await syncStoreData(to: .init())
+    }
 }

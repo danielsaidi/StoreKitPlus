@@ -9,6 +9,10 @@
 import StoreKit
 
 /// This class can be used to retrieve StoreKit products.
+///
+/// This standard implementation will just return StoreKit's
+/// `Product.products(for:)` but you can customize it if you
+/// have to perform other operations while fetching products.
 open class StandardStoreProductService: StoreProductService {
 
     /// Create a service instance for the provided IDs.

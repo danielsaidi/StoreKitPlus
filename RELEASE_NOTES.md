@@ -2,7 +2,24 @@
 
 StoreKitPlus will use semver after 1.0. 
 
-Until then, deprecated features may be removed in any minor version.
+Until then, deprecated features may be removed in any minor version, and breaking changes introduced.
+
+
+## 0.4
+
+This version makes StoreKitPlus use Swift 6.
+
+### ‼️ Important information
+
+As a result of the Swift 6 transition, and due to data race problems, the store services no longer takes a context and keeps it in sync. This must be explicitly handled by the caller.
+
+Furthermore, the service model is drastically simplified in this version. Instead of having multiple service types, `StoreService` handles it all. Instead of composition, you can override any open function to modify the service behavior.
+
+### ✨ Features
+
+* `StandardProductService` no longer accepts a context, and will no longer keep it in sync.
+* `StandardProductPurchaseService` no longer accepts a context, and will no longer keep it in sync.
+
 
 
 ## 0.3.2

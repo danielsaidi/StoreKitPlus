@@ -28,7 +28,7 @@ import StoreKit
 /// a purchase. If your app fails to fetch products, e.g. if
 /// it's offline, you should show a spinner or an alert that
 /// informs your users that your products can't be retrieved.
-public class StoreContext: ObservableObject {
+public class StoreContext: ObservableObject, @unchecked Sendable {
 
     /// Create a context instance.
     ///
@@ -97,6 +97,28 @@ public class StoreContext: ObservableObject {
     
     @Persisted(key: key("purchasedProductIds"), defaultValue: [])
     private var persistedPurchasedProductIds: [String]
+}
+
+@MainActor
+public extension StoreContext {
+
+    /// Update the context products.
+    func updateProducts(_ products: [Product]) {
+        self.products = products
+    }
+
+    /// Update the context purchase transactions.
+    func updatePurchaseTransactions(with transaction: Transaction) {
+        var transactions = purchaseTransactions
+            .filter { $0.productID != transaction.productID }
+        transactions.append(transaction)
+        purchaseTransactions = transactions
+    }
+
+    /// Update the context purchase transactions.
+    func updatePurchaseTransactions(_ transactions: [Transaction]) {
+        purchaseTransactions = transactions
+    }
 }
 
 private extension StoreContext {
