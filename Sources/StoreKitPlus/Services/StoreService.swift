@@ -8,7 +8,15 @@
 
 import StoreKit
 
-/// This protocol inherits multiple store protocols, and can
-/// be implemented by a single service that can take care of
-/// many store-related operations.
-public protocol StoreService: StoreProductService, StorePurchaseService, StoreSyncService {}
+/// This protocol can be implemented by any classes that can
+/// be used to fetch and purchase products, restore purchase
+/// information, etc.
+///
+/// Although some operations can be performed directly using
+/// StoreKit like `Product.products(for:)`, the service lets
+/// you customize any part of the StoreKit integration.
+public protocol StoreService: StorePurchaseService, StoreSyncService {
+
+    /// Get all available products.
+    func getProducts() async throws -> [Product]
+}

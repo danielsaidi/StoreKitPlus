@@ -8,11 +8,7 @@
 
 import StoreKit
 
-/// This class can be used to retrieve StoreKit products.
-///
-/// This standard implementation will just return StoreKit's
-/// `Product.products(for:)` but you can customize it if you
-/// have to perform other operations while fetching products.
+@available(*, deprecated, message: "Just use StandardStoreService instead.")
 open class StandardStoreProductService: StoreProductService {
 
     /// Create a service instance for the provided IDs.

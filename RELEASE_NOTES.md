@@ -20,6 +20,10 @@ Furthermore, the service model is drastically simplified in this version. Instea
 * `StandardProductService` no longer accepts a context, and will no longer keep it in sync.
 * `StandardProductPurchaseService` no longer accepts a context, and will no longer keep it in sync.
 
+### 🗑️ Deprecations
+
+* `StoreProductService` has been deprecated - just use `StoreService` instead.
+
 
 
 ## 0.3.2

@@ -27,12 +27,9 @@ open class StandardStoreService: StoreService {
     ///   - purchaseService: A custom purchase service to use, if any.
     public init(
         productIds: [String],
-        productService: StoreProductService? = nil,
         purchaseService: StorePurchaseService? = nil
     ) {
         self.productIds = productIds
-        self.productService = productService ?? StandardStoreProductService(
-            productIds: productIds)
         self.purchaseService = purchaseService ?? StandardStorePurchaseService(
             productIds: productIds)
     }
@@ -42,28 +39,24 @@ open class StandardStoreService: StoreService {
     ///
     /// - Parameters:
     ///   - products: The products to handle.
-    ///   - productService: A custom product service to use, if any.
     ///   - purchaseService: A custom purchase service to use, if any.
     public convenience init<Product: ProductRepresentable>(
         products: [Product],
-        productService: StoreProductService? = nil,
         purchaseService: StorePurchaseService? = nil
     ) {
         self.init(
             productIds: products.map { $0.id },
-            productService: productService,
             purchaseService: purchaseService
         )
     }
     
     private let productIds: [String]
-    private let productService: StoreProductService
     private let purchaseService: StorePurchaseService
     
     open func getProducts() async throws -> [Product] {
-        try await productService.getProducts()
+        try await Product.products(for: productIds)
     }
-    
+
     open func purchase(_ product: Product) async throws -> Product.PurchaseResult {
         try await purchaseService.purchase(product)
     }

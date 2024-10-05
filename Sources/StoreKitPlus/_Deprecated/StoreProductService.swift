@@ -8,8 +8,7 @@
 
 import StoreKit
 
-/// This protocol can be implemented by any classes that can
-/// be used to retrieve StoreKit products.
+@available(*, deprecated, message: "Just use StoreService instead.")
 public protocol StoreProductService: AnyObject {
 
     /// Get all available products.
