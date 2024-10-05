@@ -8,14 +8,11 @@
 
 import StoreKit
 
-/// This protocol can be implemented by any classes that can
-/// be used to perform StoreKit product purchase operations.
+@available(*, deprecated, message: "Just use StoreService instead.")
 public protocol StorePurchaseService: AnyObject {
 
-    /// Purchase the provided product.
     func purchase(_ product: Product) async throws -> Product.PurchaseResult
 
-    /// Restore all purchases and get the valid transactions.
     @discardableResult
     func restorePurchases() async throws -> [Transaction]
 }

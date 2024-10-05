@@ -8,12 +8,17 @@
 
 import StoreKit
 
-/// This class can be used to perform StoreKit purchases.
-///
-/// This class keeps purchases in sync with a ``StoreContext``
-/// that can also be used to observe changes to drive the UI.
+@available(*, deprecated, message: "Just use StoreService instead.")
 open class StandardStorePurchaseService: StorePurchaseService {
 
+    @available(*, deprecated, message: "This class no longer takes a context. You must manually keep a context in sync.")
+    convenience init(
+        productIds: [String],
+        context: StoreContext
+    ) {
+        self.init(productIds: productIds)
+    }
+    
     /// Create a service instance for the provided IDs.
     ///
     /// - Parameters:
@@ -91,12 +96,9 @@ open class StandardStorePurchaseService: StorePurchaseService {
         let result = try latest.verify()
         return result.isValid ? result : nil
     }
-}
-
-private extension StandardStorePurchaseService {
 
     /// Get a task that can to listen to transaction changes.
-    func getTransactionListenerTask() -> Task<Void, Error> {
+    private func getTransactionListenerTask() -> Task<Void, Error> {
         Task.detached {
             for await result in Transaction.updates {
                 do {

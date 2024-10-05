@@ -23,6 +23,7 @@ Furthermore, the service model is drastically simplified in this version. Instea
 ### 🗑️ Deprecations
 
 * `StoreProductService` has been deprecated - just use `StoreService` instead.
+* `StorePurchaseService` has been deprecated - just use `StoreService` instead.
 
 
 

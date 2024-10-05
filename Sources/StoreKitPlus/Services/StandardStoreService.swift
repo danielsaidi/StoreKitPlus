@@ -23,15 +23,11 @@ open class StandardStoreService: StoreService {
     ///
     /// - Parameters:
     ///   - productIds: The IDs of the products to handle.
-    ///   - productService: A custom product service to use, if any.
-    ///   - purchaseService: A custom purchase service to use, if any.
     public init(
-        productIds: [String],
-        purchaseService: StorePurchaseService? = nil
+        productIds: [String]
     ) {
         self.productIds = productIds
-        self.purchaseService = purchaseService ?? StandardStorePurchaseService(
-            productIds: productIds)
+        updateTransactionsOnLaunch()
     }
 
     /// Create a service instance for the provided `products`,
@@ -39,36 +35,97 @@ open class StandardStoreService: StoreService {
     ///
     /// - Parameters:
     ///   - products: The products to handle.
-    ///   - purchaseService: A custom purchase service to use, if any.
     public convenience init<Product: ProductRepresentable>(
-        products: [Product],
-        purchaseService: StorePurchaseService? = nil
+        products: [Product]
     ) {
         self.init(
-            productIds: products.map { $0.id },
-            purchaseService: purchaseService
+            productIds: products.map { $0.id }
         )
     }
     
     private let productIds: [String]
-    private let purchaseService: StorePurchaseService
     
     open func getProducts() async throws -> [Product] {
         try await Product.products(for: productIds)
     }
 
     open func purchase(_ product: Product) async throws -> Product.PurchaseResult {
-        try await purchaseService.purchase(product)
+        #if os(visionOS)
+        throw StoreServiceError.unsupportedPlatform("This purchase operation is not supported in visionOS: Use @Environment(\\.purchase) instead.")
+        #else
+        let result = try await product.purchase()
+        switch result {
+        case .success(let result): try await finalizePurchaseResult(result)
+        case .pending: break
+        case .userCancelled: break
+        @unknown default: break
+        }
+        return result
+        #endif
     }
     
     @discardableResult
     open func restorePurchases() async throws -> [Transaction] {
-        try await purchaseService.restorePurchases()
+        var transactions: [Transaction] = []
+        for id in productIds {
+            if let transaction = try await getValidTransaction(for: id) {
+                transactions.append(transaction)
+            }
+        }
+        return transactions
     }
 
     open func syncStoreData(to context: StoreContext) async throws {
         let products = try await getProducts()
         await context.updateProducts(products)
         try await restorePurchases()
+    }
+
+
+    // MARK: - Open functions
+
+    /// Finalize a purchase result from a ``purchase(_:)``.
+    open func finalizePurchaseResult(
+        _ result: VerificationResult<Transaction>
+    ) async throws {
+        let transaction = try result.verify()
+        await transaction.finish()
+    }
+
+    /// Try to resolve a valid transaction for a certain ID.
+    ///
+    /// This function will fetch and verify all transactions
+    /// before returning them.
+    open func getValidTransaction(
+        for productId: ProductID
+    ) async throws -> Transaction? {
+        guard let latest = await Transaction.latest(for: productId) else { return nil }
+        let result = try latest.verify()
+        return result.isValid ? result : nil
+    }
+
+    /// This function is called by the initializer, and will
+    /// fetch transaction updates and try to verify them.
+    open func updateTransactionsOnLaunch() {
+        Task.detached {
+            for await result in Transaction.updates {
+                do {
+                    try result.verify()
+                } catch {
+                    print("Transaction listener error: \(error)")
+                }
+            }
+        }
+    }
+}
+
+private extension VerificationResult where SignedType == Transaction {
+
+    @discardableResult
+    func verify() throws -> Transaction {
+        switch self {
+        case .unverified(let transaction, let error): throw StoreServiceError.invalidTransaction(transaction, error)
+        case .verified(let transaction): return transaction
+        }
     }
 }

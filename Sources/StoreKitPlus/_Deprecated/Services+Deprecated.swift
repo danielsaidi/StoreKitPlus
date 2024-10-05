@@ -1,14 +1,3 @@
-public extension StandardStorePurchaseService {
-
-    @available(*, deprecated, message: "This class no longer takes a context. You must manually keep a context in sync.")
-    convenience init(
-        productIds: [String],
-        context: StoreContext
-    ) {
-        self.init(productIds: productIds)
-    }
-}
-
 public extension StandardStoreService {
 
     @available(*, deprecated, message: "This class no longer takes a context. You must manually keep a context in sync.")
@@ -18,11 +7,7 @@ public extension StandardStoreService {
         productService: StoreProductService? = nil,
         purchaseService: StorePurchaseService? = nil
     ) {
-        self.init(
-            productIds: productIds,
-            productService: productService,
-            purchaseService: purchaseService
-        )
+        self.init(productIds: productIds)
     }
 
     @available(*, deprecated, message: "This class no longer takes a context. You must manually keep a context in sync.")

@@ -11,6 +11,5 @@ import StoreKit
 @available(*, deprecated, message: "Just use StoreService instead.")
 public protocol StoreProductService: AnyObject {
 
-    /// Get all available products.
     func getProducts() async throws -> [Product]
 }
