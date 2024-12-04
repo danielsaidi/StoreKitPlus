@@ -9,7 +9,7 @@
 import Foundation
 
 /// This protocol can be implemented by types that should be
-/// able to represent an app's StoreKit products.
+/// able to represent a StoreKit product.
 ///
 /// This protocol can be used to define a local product that
 /// uses the same product ID as a real StoreKit product. The
@@ -25,7 +25,7 @@ public protocol ProductRepresentable: Identifiable {
 public extension Collection where Element: ProductRepresentable {
 
     /// Get all products available in a ``StoreContext``.
-    func available(_ context: StoreContext) -> [Self.Element] {
+    func available(in context: StoreContext) -> [Self.Element] {
         let ids = context.productIds
         return self.filter { ids.contains($0.id) }
     }

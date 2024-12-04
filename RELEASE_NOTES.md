@@ -7,6 +7,16 @@ Until then, deprecated features may be removed in any minor version, and breakin
 
 ## 0.4
 
+This version adds more utilities.
+
+### ✨ Features
+
+* `BasicProduct` is a new, lightweight product struct.
+
+
+
+## 0.4
+
 This version makes StoreKitPlus use Swift 6.
 
 ### ‼️ Important information
