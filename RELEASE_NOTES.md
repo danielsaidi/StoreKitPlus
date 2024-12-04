@@ -12,6 +12,7 @@ This version adds more utilities.
 ### ✨ Features
 
 * `BasicProduct` is a new, lightweight product struct.
+* `Product` has new ways of calculating yearly savings.
 
 
 
