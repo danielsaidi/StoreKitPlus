@@ -5,11 +5,16 @@
 //  Created by Daniel Saidi on 2024-12-04.
 //
 
-import SwiftUI
+import StoreKit
 
+/// This struct is a basic prroduct representation, that you
+/// can use to define your products with just an ID and name.
+///
+/// The ``StoreContext`` is extended with more ways to fetch
+/// product information for a basic product.
 public struct BasicProduct: Identifiable, ProductRepresentable {
 
-    /// Create a new product.
+    /// Create a basic product representation.
     ///
     /// - Parameters:
     ///   - id: The App Store string ID of the product.
@@ -24,6 +29,19 @@ public struct BasicProduct: Identifiable, ProductRepresentable {
 
     /// The product display name.
     public let name: String
+}
+
+public extension StoreContext {
+
+    /// Whether a certain basic product is purchased.
+    func isProductPurchased(_ prod: BasicProduct) -> Bool {
+        isProductPurchased(id: prod.id)
+    }
+
+    /// Get a StoreKit product for a certain basic product.
+    func product(_ prod: BasicProduct) -> Product? {
+        product(withId: prod.id)
+    }
 }
 
 public extension BasicProduct {
