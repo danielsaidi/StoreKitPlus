@@ -104,7 +104,7 @@ open class StandardStoreService: StoreService {
     ) async throws {
         let products = try await getProducts()
         await context.updateProducts(products)
-        try await restorePurchases()
+        try await restorePurchases(syncWith: context)
     }
 
 
