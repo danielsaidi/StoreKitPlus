@@ -88,8 +88,7 @@ open class StandardStoreService: StoreService {
         #endif
     }
     
-    @discardableResult
-    open func restorePurchases() async throws -> [Transaction] {
+    open func getValidProductTransations() async throws -> [Transaction] {
         var transactions: [Transaction] = []
         for id in productIds {
             if let transaction = try await getValidTransaction(for: id) {
@@ -104,7 +103,7 @@ open class StandardStoreService: StoreService {
     ) async throws {
         let products = try await getProducts()
         await context.updateProducts(products)
-        try await restorePurchases(syncWith: context)
+        try await restorePurchases(with: context)
     }
 
 
@@ -117,11 +116,8 @@ open class StandardStoreService: StoreService {
         let transaction = try result.verify()
         await transaction.finish()
     }
-
-    /// Try to resolve a valid transaction for a certain ID.
-    ///
-    /// This function will fetch and verify all transactions
-    /// before returning them.
+    
+    /// Get all valid transations for a certain product.
     open func getValidTransaction(
         for productId: ProductID
     ) async throws -> Transaction? {

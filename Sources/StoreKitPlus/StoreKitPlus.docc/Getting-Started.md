@@ -113,8 +113,9 @@ Since purchases involve a bunch of steps and can become complicated, you can als
 
 ```swift
 let ids = ["com.your-app.productid"]
+let context = StoreContext()
 let service = StandardStorePurchaseService(productIds: ids)
-let result = try await service.purchase(product)
+let result = try await service.purchase(product, syncWith: context)
 ```
 
 The ``StandardStoreService`` will automatically verify and finish the purchase transactions.
@@ -130,7 +131,7 @@ However, this involves many steps and can become complicated. To make things eas
 ```swift
 let ids = ["com.your-app.productid"]
 let service = StandardStorePurchaseService(productIds: ids)
-try await service.restorePurchases()
+try await service.restorePurchases(with: context)
 ```
 
 The standard service communicates with StoreKit and syncs the result with the provided context.

@@ -19,16 +19,15 @@ public protocol StoreService {
 
     /// Get all available products.
     func getProducts() async throws -> [Product]
+    
+    /// Get all valid product transations.
+    func getValidProductTransations() async throws -> [Transaction]
 
     /// Purchase a certain product.
     @discardableResult
     func purchase(
         _ product: Product
     ) async throws -> (Product.PurchaseResult, Transaction?)
-
-    /// Restore previous purchases.
-    @discardableResult
-    func restorePurchases() async throws -> [Transaction]
 
     /// Sync StoreKit products and purchases to a context.
     func syncStoreData(
@@ -56,20 +55,10 @@ public extension StoreService {
     /// Restore previous purchases.
     ///
     /// This function will sync the result to the context.
-    @discardableResult
     func restorePurchases(
-        syncWith context: StoreContext
-    ) async throws -> [Transaction] {
-        let result = try await restorePurchases()
-        await context.updatePurchaseTransactions(result)
-        return result
-    }
-}
-
-public extension StoreService {
-
-    @available(*, deprecated, message: "You have to pass in a context now.")
-    func syncStoreData() async throws {
-        try await syncStoreData(to: .init())
+        with context: StoreContext
+    ) async throws {
+        let transactions = try await getValidProductTransations()
+        await context.updatePurchaseTransactions(transactions)
     }
 }

@@ -9,6 +9,18 @@ Until then, deprecated features may be removed in any minor version, and breakin
 
 This version removes deprecated code and adjusts some service terminology.
 
+### ‼️ Breaking Changes
+
+This version updates `StoreService` by renaming `restorePurchases()` to `getValidProductTransations()`.
+
+This should have been done in 0.4. As the function only returned transactions, this was very confusing.
+
+By renaming it, we no longer risk calling it with the intention of restoring purchases, which it didn't do.
+
+We can now use `syncStoreData(to:)` and `restorePurchases(syncWith:)` to perform the exact operation we want.
+
+Since these changes involve protocol changes, the changes are breaking. They should hopefully be easy to fix.  
+
 
 
 ## 0.5
