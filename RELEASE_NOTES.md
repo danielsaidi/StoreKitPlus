@@ -5,6 +5,12 @@ StoreKitPlus will use semver after 1.0.
 Until then, deprecated features may be removed in any minor version, and breaking changes introduced.
 
 
+## 0.6
+
+This version removes deprecated code and adjusts some service terminology.
+
+
+
 ## 0.5
 
 This version adds more utilities.
