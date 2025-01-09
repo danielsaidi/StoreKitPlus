@@ -140,7 +140,7 @@ The standard service communicates with StoreKit and syncs the result with the pr
 
 ## Syncing store data
 
-To perform a product and purchase sync, you can fetch products and transactions from StoreKit.
+To perform a product and purchase sync, you can fetch products and purchases from StoreKit.
 
 Using a ``StoreService`` lets you easily sync all data to a ``StoreContext``:
 
