@@ -1,26 +1,20 @@
 <p align="center">
-    <img src ="Resources/Logo_GitHub.png" alt="StoreKitPlus Logo" title="StoreKitPlus" />
+    <img src="Resources/Icon.png" alt="Project Icon" width="250" />
 </p>
 
 <p align="center">
         <img src="https://img.shields.io/github/v/release/danielsaidi/StoreKitPlus?color=%2300550&sort=semver" alt="Version" />
     <img src="https://img.shields.io/badge/Swift-6.0-orange.svg" alt="Swift 6.0" />
-    <img src="https://img.shields.io/badge/platform-SwiftUI-blue.svg" alt="Swift UI" title="Swift UI" />
+    <a href="https://danielsaidi.github.io/StoreKitPlus"><img src="https://img.shields.io/badge/documentation-web-blue.svg" alt="Documentation" /></a>
     <img src="https://img.shields.io/github/license/danielsaidi/StoreKitPlus" alt="MIT License" />
-        <a href="https://twitter.com/danielsaidi">
-        <img src="https://img.shields.io/twitter/url?label=Twitter&style=social&url=https%3A%2F%2Ftwitter.com%2Fdanielsaidi" alt="Twitter: @danielsaidi" title="Twitter: @danielsaidi" />
-    </a>
-    <a href="https://mastodon.social/@danielsaidi">
-        <img src="https://img.shields.io/mastodon/follow/000253346?label=mastodon&style=social" alt="Mastodon: @danielsaidi@mastodon.social" title="Mastodon: @danielsaidi@mastodon.social" />
-    </a>
 </p>
 
 
-## About StoreKitPlus
+# StoreKitPlus
 
 StoreKitPlus is a Swift SDK that makes it easy to integrate with StoreKit 2.
 
-StoreKitPlus has an observable ``StoreContext`` that lets you observe store state, services that let you fetch, purchase and sync products, as well as a ``ProductRepresentable`` protocol that lets you use local product representations in your app.
+StoreKitPlus has a `StoreContext` that lets you observe store state, services that let you fetch, purchase and sync products, and a `ProductRepresentable` protocol that lets you use local product representations in your app.
 
 
 
@@ -59,9 +53,9 @@ Your support makes it possible for me to put more work into these projects and m
 Feel free to reach out if you have questions or if you want to contribute in any way:
 
 * Website: [danielsaidi.com][Website]
-* Mastodon: [@danielsaidi@mastodon.social][Mastodon]
-* Twitter: [@danielsaidi][Twitter]
 * E-mail: [daniel.saidi@gmail.com][Email]
+* Bluesky: [@danielsaidi@bsky.social][Bluesky]
+* Mastodon: [@danielsaidi@mastodon.social][Mastodon]
 
 
 
@@ -71,15 +65,15 @@ StoreKitPlus is available under the MIT license. See the [LICENSE][License] file
 
 
 [Email]: mailto:daniel.saidi@gmail.com
-
 [Website]: https://danielsaidi.com
 [GitHub]: https://github.com/danielsaidi
-[Twitter]: https://twitter.com/danielsaidi
-[Mastodon]: https://mastodon.social/@danielsaidi
 [OpenSource]: https://danielsaidi.com/opensource
 [Sponsors]: https://github.com/sponsors/danielsaidi
 
+[Bluesky]: https://bsky.app/profile/danielsaidi.bsky.social
+[Mastodon]: https://mastodon.social/@danielsaidi
+[Twitter]: https://twitter.com/danielsaidi
+
 [Documentation]: https://danielsaidi.github.io/StoreKitPlus
 [Getting-Started]: https://danielsaidi.github.io/StoreKitPlus/documentation/storekitplus/getting-started
-
 [License]: https://github.com/danielsaidi/StoreKitPlus/blob/master/LICENSE
