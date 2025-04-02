@@ -69,10 +69,18 @@ open class StandardStoreService: StoreService {
     open func getProducts() async throws -> [Product] {
         try await Product.products(for: productIds)
     }
-
+    
     @discardableResult
     open func purchase(
         _ product: Product
+    ) async throws -> (Product.PurchaseResult, Transaction?) {
+        try await purchase(product, options: [])
+    }
+
+    @discardableResult
+    open func purchase(
+        _ product: Product,
+        options: Set<Product.PurchaseOption>
     ) async throws -> (Product.PurchaseResult, Transaction?) {
         #if os(visionOS)
         throw StoreServiceError.unsupportedPlatform("This purchase operation is not supported in visionOS: Use @Environment(\\.purchase) instead.")

@@ -24,9 +24,23 @@ public protocol StoreService {
     func getValidProductTransations() async throws -> [Transaction]
 
     /// Purchase a certain product.
+    ///
+    /// - Parameters:
+    ///   - product: The product to purchase.
     @discardableResult
     func purchase(
         _ product: Product
+    ) async throws -> (Product.PurchaseResult, Transaction?)
+    
+    /// Purchase a certain product.
+    ///
+    /// - Parameters:
+    ///   - product: The product to purchase.
+    ///   - options: Additional purchase options.
+    @discardableResult
+    func purchase(
+        _ product: Product,
+        options: Set<Product.PurchaseOption>
     ) async throws -> (Product.PurchaseResult, Transaction?)
 
     /// Sync StoreKit products and purchases to a context.
