@@ -6,6 +6,14 @@ Until then, deprecated features may be removed in any minor version, and breakin
 
 
 
+## 0.7.1
+
+### 💡 Adjustments
+
+* `BasicProduct` is now `Sendable`.
+
+
+
 ## 0.7
 
 ### ✨ Features

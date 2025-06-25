@@ -12,7 +12,7 @@ import StoreKit
 ///
 /// The ``StoreContext`` is extended with more ways to fetch
 /// product information for a basic product.
-public struct BasicProduct: Identifiable, ProductRepresentable {
+public struct BasicProduct: Identifiable, ProductRepresentable, Sendable {
 
     /// Create a basic product representation.
     ///
