@@ -8,11 +8,7 @@
 
 import StoreKit
 
-/// This protocol can be implemented by any transaction that
-/// can be validated.
-///
-/// Valid transactions have no revocation date and also have
-/// expired expiration date.
+/// This protocol can be implemented by any transaction that can be validated.
 public protocol ValidatableTransaction {
 
     /// The date, if any, when the transaction expired.
@@ -28,8 +24,7 @@ public extension ValidatableTransaction {
 
     /// Whether or not the transaction is valid.
     ///
-    /// A valid transaction has no revocation date, and also
-    /// has no expiration date that has passed.
+    /// A valid transaction has no revocation date, and no past expiration date.
     var isValid: Bool {
         if revocationDate != nil { return false }
         guard let date = expirationDate else { return true }

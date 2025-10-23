@@ -7,11 +7,10 @@
 
 import StoreKit
 
-/// This struct is a basic prroduct representation, that you
-/// can use to define your products with just an ID and name.
+/// This basic product representation can be used to refer to an App Store product
+/// with just its ID and name.
 ///
-/// The ``StoreContext`` is extended with more ways to fetch
-/// product information for a basic product.
+/// The ``StoreContext`` has ways to fetch product info for a basic product.
 public struct BasicProduct: Identifiable, ProductRepresentable, Sendable {
 
     /// Create a basic product representation.

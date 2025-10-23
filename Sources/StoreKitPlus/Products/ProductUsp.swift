@@ -10,11 +10,9 @@ import SwiftUI
 
 /// This type defines a "unique selling point" for a product.
 ///
-/// A USP is a way to specify a list of reasons why a person
-/// should purchase your product.
-///
-/// A USP can be rendered with a ``ProductUsp/Label`` and an
-/// array of USPs with a ``ProductUsp/LabelStack``.
+/// Listing USPs is a way to tell people why they should purchase your product. A
+/// USP can be rendered with a ``ProductUsp/Label`` and an array of USPs
+/// can be rendered with a ``ProductUsp/LabelStack``.
 public struct ProductUsp {
 
     /// Create a custom USP.

@@ -31,14 +31,13 @@ public extension StoreService where Self == StandardStoreService {
     }
 }
 
-/// This class implements the ``StoreService`` protocol, and
-/// can be used to integrate with StoreKit.
+/// This class can be used to integrate with StoreKit.
 ///
-/// You can use this service with a local product collection,
-/// by adding a StoreKit configuration file to the app.
+/// You can use this service with local products by adding a StoreKit configuration
+/// file to your app.
 ///
-/// You can use the two ``StoreService/standard(products:)``
-/// shorthands to easily create a standard service instance.
+/// You can use the ``StoreService/standard(products:)`` shorthands
+/// to easily create a standard service instance.
 open class StandardStoreService: StoreService {
 
     /// Create a service instance for the provided IDs.
@@ -134,8 +133,8 @@ open class StandardStoreService: StoreService {
         return result.isValid ? result : nil
     }
 
-    /// This function is called by the initializer, and will
-    /// fetch transaction updates and try to verify them.
+    /// This function is called by the initializer, and will fetch transaction updates
+    /// and try to verify them.
     open func updateTransactionsOnLaunch() {
         Task.detached {
             for await result in Transaction.updates {

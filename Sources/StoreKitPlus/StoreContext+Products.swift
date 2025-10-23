@@ -22,8 +22,8 @@ public extension StoreContext {
 
     /// Get a product with a certain ID.
     ///
-    /// This function will only return a matching product if
-    /// the ``products`` array has been synced with StoreKit.
+    /// This will only return a matching product if the ``products`` array has
+    /// been synced with StoreKit.
     ///
     /// - Parameters:
     ///   - id: The ID of the product to fetch.

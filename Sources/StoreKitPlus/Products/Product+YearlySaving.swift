@@ -10,8 +10,8 @@ import StoreKit
 
 public extension Product {
 
-    /// Get a yearly savings in percentages when comparing a
-    /// yearly product with a monthy one.
+    /// Calculate a yearly savings percentage when comparing a yearly product
+    /// with a monthy one.
     ///
     /// - Returns: A raw 0-1 percentage.
     static func yearlySavingsPercentage(
@@ -24,8 +24,8 @@ public extension Product {
         )
     }
 
-    /// Get a yearly savings in percentages when comparing a
-    /// yearly price with a monthy one.
+    /// Calculate a yearly savings percentage when comparing a yearly product
+    /// price with a monthy one.
     ///
     /// - Returns: A raw 0-1 percentage.
     static func yearlySavingsPercentage(
@@ -38,8 +38,8 @@ public extension Product {
         return percentage
     }
 
-    /// Get a yearly savings in percentages when comparing a
-    /// yearly product with a monthy product variant.
+    /// Calculate a yearly savings percentage when comparing a yearly product
+    /// with a monthy one, and represent it as a 0-100 percentage.
     ///
     /// - Returns: A 0-100 (not 0-1) display percentage.
     static func yearlySavingsDisplayPercentage(
@@ -52,8 +52,8 @@ public extension Product {
         )
     }
 
-    /// Get a yearly savings in percentages when comparing a
-    /// yearly product with a monthy product variant.
+    /// Calculate a yearly savings percentage when comparing a yearly product
+    /// price with a monthy one, and represent it as a 0-100 percentage.
     ///
     /// - Returns: A 0-100 (not 0-1) display percentage.
     static func yearlySavingsDisplayPercentage(
