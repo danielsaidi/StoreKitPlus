@@ -1,8 +1,14 @@
-# Release notes
+# Release Notes
 
-StoreKitPlus will use semver after 1.0. 
+[StoreKitPlus](https://github.com/danielsaidi/StoreKitPlus) will use semver after 1.0. 
 
-Until then, deprecated features may be removed in any minor version, and breaking changes introduced.
+Until then, breaking changes can happen in any minor version bump.
+
+
+
+## 0.8
+
+This version bumps the package to Swift 6.1.
 
 
 
