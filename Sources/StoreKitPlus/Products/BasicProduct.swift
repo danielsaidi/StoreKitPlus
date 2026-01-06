@@ -3,6 +3,7 @@
 //  StoreKitPlus
 //
 //  Created by Daniel Saidi on 2024-12-04.
+//  Copyright © 2024-2026 Daniel Saidi. All rights reserved.
 //
 
 import StoreKit
