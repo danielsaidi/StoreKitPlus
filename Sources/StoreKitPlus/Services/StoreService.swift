@@ -74,6 +74,8 @@ public extension StoreService {
     func restorePurchases(
         with context: StoreContext
     ) async throws {
+        let products = try await getProducts()
+        await context.updateProducts(products)
         let transactions = try await getValidProductTransations()
         await context.updatePurchaseTransactions(transactions)
     }

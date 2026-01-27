@@ -6,6 +6,14 @@ Until then, breaking changes can happen in any minor version bump.
 
 
 
+## 0.8.1
+
+### 💡 Changes
+
+* `StoreService` `restorePurchases` now also fetches products.
+
+
+
 ## 0.8
 
 This version bumps the package to Swift 6.1.

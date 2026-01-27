@@ -108,8 +108,6 @@ open class StandardStoreService: StoreService {
     open func syncStoreData(
         to context: StoreContext
     ) async throws {
-        let products = try await getProducts()
-        await context.updateProducts(products)
         try await restorePurchases(with: context)
     }
 
