@@ -20,10 +20,7 @@ public extension StoreContext {
         isProductPurchased(id: product.id)
     }
 
-    /// Get a product with a certain ID.
-    ///
-    /// This will only return a matching product if the ``products`` array has
-    /// been synced with StoreKit.
+    /// Get a product from ``products`` with a certain ID.
     ///
     /// - Parameters:
     ///   - id: The ID of the product to fetch.

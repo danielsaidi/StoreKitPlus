@@ -8,13 +8,15 @@
 
 import StoreKit
 
-/// This protocol can be implemented by types that can fetch product information,
-/// purchase products, restore purchase information, etc.
+/// This protocol can be implemented by types that can fetch
+/// product information, purchase products, restore purchase
+/// information, etc.
 ///
-/// Although many operations can be performed by using the StoreKit APIs directly,
-/// like using `Product.products(for:)` to fetch products, a store service
-/// can be used as a layer between the app and StoreKit, and can also be used to
-/// customize or mock the integration, e.g. in tests.
+/// Although these operations can be performed with StoreKit
+/// APIs, like `Product.products(for:)` to fetch products, a
+/// store service can be used as a layer between the app and
+/// StoreKit, and can be used to customize or mock the store
+/// integration, e.g. in tests.
 public protocol StoreService {
 
     /// Get all available products.

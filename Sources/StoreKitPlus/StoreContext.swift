@@ -8,23 +8,27 @@
 
 import StoreKit
 
-/// This observable class can manage store-based state in an observable way.
+/// This observable context type can be used to manage store
+/// state in an observable way.
 ///
-/// You can use the ``StandardStoreService`` to sync product information
-/// with a context instance when performing certain operations.
+/// You can use the ``StandardStoreService`` to sync product
+/// states with a context when performing certain operations.
 ///
-/// Since StoreKit `Product` isn't `Codable`, the ``products`` array isn't
-/// permanently persisted. This means that it will reset when the app is restarted.
-/// Due to this, there's also a ``productIds`` property that *is* permanently
-/// persisted. This gives you an option to map ``productIds`` to local product
-/// representations whenever the app can't access StoreKit. However, note that a
-/// StoreKit `Product` is needed to perform a purchase.
+/// Since the StoreKit `Product` and `Transaction` types are
+/// not `Codable`, the ``products`` & ``purchaseTransactions``
+/// propertes are not permanently persisted. The context has
+/// persisted ``productIds`` and ``purchasedProductIds``, to
+/// to give us an option to map these IDs to a local product
+/// representations when the app can't access StoreKit.
 public class StoreContext: ObservableObject, @unchecked Sendable {
 
-    /// Create a context instance.
+    /// Create a context instance with a list of product IDs.
+    ///
+    /// The provided IDs will be used to if no IDs have been
+    /// persisted yet.
     ///
     /// - Parameters:
-    ///   - productIds: An optional list of initial product IDs to use if no IDs have been persisted yet.
+    ///   - productIds: An optional list of initial product IDs .
     public init(productIds: [String] = []) {
         products = []
         self.productIds = persistedProductIds.isEmpty ? productIds : persistedProductIds

@@ -11,9 +11,9 @@ import StoreKit
 /// This enum defines store service-speific errors.
 public enum StoreServiceError: Error {
     
-    /// This error is thrown if a transaction can't be verified.
+    /// This error means a transaction can't be verified.
     case invalidTransaction(Transaction, VerificationResult<Transaction>.VerificationError)
     
-    /// This error is thrown if the platform doesn't support a purchase.
+    /// This error means the platform doesn't support purchases.
     case unsupportedPlatform(_ message: String)
 }

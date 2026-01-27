@@ -8,10 +8,11 @@
 
 import StoreKit
 
-/// This basic product representation can be used to refer to an App Store product
-/// with just its ID and name.
+/// This product representation type can be used to refer to
+/// an App Store product with just its ID and name.
 ///
-/// The ``StoreContext`` has ways to fetch product info for a basic product.
+/// The ``StoreContext`` has ways to fetch App Store product
+/// values for any ``ProductRepresentable``.
 public struct BasicProduct: Identifiable, ProductRepresentable, Sendable {
 
     /// Create a basic product representation.
