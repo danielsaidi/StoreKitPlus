@@ -32,19 +32,6 @@ public struct BasicProduct: Identifiable, ProductRepresentable, Sendable {
     public let name: String
 }
 
-public extension StoreContext {
-
-    /// Whether a certain basic product is purchased.
-    func isProductPurchased(_ prod: BasicProduct) -> Bool {
-        isProductPurchased(id: prod.id)
-    }
-
-    /// Get a StoreKit product for a certain basic product.
-    func product(_ prod: BasicProduct) -> Product? {
-        product(withId: prod.id)
-    }
-}
-
 public extension BasicProduct {
 
     static func preview(_ name: String) -> Self {

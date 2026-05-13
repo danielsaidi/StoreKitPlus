@@ -6,6 +6,16 @@ Until then, breaking changes can happen in any minor version bump.
 
 
 
+## 0.9
+
+This version adds more ways to manage products.
+
+### ✨ Features
+
+* `StoreContext` has a new `ProductRepresentable`-based `isProductPurchased(...)`.
+* `StoreContext` has a new `ProductRepresentable`-based `product(for: ...)`.
+
+
 ## 0.8.1
 
 ### 💡 Changes

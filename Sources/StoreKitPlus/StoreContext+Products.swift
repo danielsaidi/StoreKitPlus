@@ -10,12 +10,17 @@ import StoreKit
 
 public extension StoreContext {
     
-    /// Check whether or not a certain product is purchased.
+    /// Check whether a certain product is purchased.
     func isProductPurchased(id: ProductID) -> Bool {
         purchasedProductIds.contains(id)
     }
-    
-    /// Check whether or not a certain product is purchased.
+
+    /// Check whether a certain product is purchased.
+    func isProductPurchased(_ product: any ProductRepresentable) -> Bool {
+        isProductPurchased(id: product.id)
+    }
+
+    /// Check whether a certain product is purchased.
     func isProductPurchased(_ product: Product) -> Bool {
         isProductPurchased(id: product.id)
     }
@@ -26,5 +31,13 @@ public extension StoreContext {
     ///   - id: The ID of the product to fetch.
     func product(withId id: String) -> Product? {
         products.first { $0.id == id }
+    }
+
+    /// Get a StoreKit product for a certain product model.
+    ///
+    /// - Parameters:
+    ///   - prod: The local product representation to fetch.
+    func product(for prod: any ProductRepresentable) -> Product? {
+        product(withId: prod.id)
     }
 }
