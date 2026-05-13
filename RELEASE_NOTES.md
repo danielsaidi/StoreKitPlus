@@ -12,8 +12,9 @@ This version adds more ways to manage products.
 
 ### ✨ Features
 
-* `StoreContext` has a new `ProductRepresentable`-based `isProductPurchased(...)`.
-* `StoreContext` has a new `ProductRepresentable`-based `product(for: ...)`.
+* `StoreContext` has new `isAnyProductPurchased(...)` functions.
+* `StoreContext` has new `ProductRepresentable`-based functions.
+
 
 
 ## 0.8.1
