@@ -15,6 +15,11 @@ This version adds more ways to manage products.
 * `StoreContext` has new `isAnyProductPurchased(...)` functions.
 * `StoreContext` has new `ProductRepresentable`-based functions.
 
+### 💡 Changes
+
+* `ProductUsp.Label` has been renamed to `ProductUspLabel`.
+* `ProductUsp.LabelStack` has been renamed to `ProductUspLabelStack`.
+
 
 
 ## 0.8.1

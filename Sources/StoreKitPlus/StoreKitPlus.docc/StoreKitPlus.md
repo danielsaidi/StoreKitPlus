@@ -65,6 +65,8 @@ StoreKitPlus is available under the MIT license.
 - ``ProductID``
 - ``ProductRepresentable``
 - ``ProductUsp``
+- ``ProductUspLabel``
+- ``ProductUspLabelStack``
 - ``BasicProduct``
 
 ### Transactions
