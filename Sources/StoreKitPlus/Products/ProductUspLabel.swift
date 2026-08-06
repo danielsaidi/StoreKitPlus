@@ -8,16 +8,6 @@
 
 import SwiftUI
 
-public extension ProductUsp {
-
-    @available(*, deprecated, renamed: "ProductUspLabel")
-    typealias Label = ProductUspLabel
-
-    @available(*, deprecated, renamed: "ProductUspLabelStack")
-    typealias LabelStack = ProductUspLabelStack
-}
-
-
 /// This label can be used to display a ``ProductUsp``.
 public struct ProductUspLabel: View {
 

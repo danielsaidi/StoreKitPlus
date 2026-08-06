@@ -6,6 +6,20 @@ Until then, breaking changes can happen in any minor version bump.
 
 
 
+## 1.0
+
+This version bumps deployment targets and replaces localized string keys with resources.
+
+### 💡 Changes
+
+* `ProductUsp` now uses `LocalizedStringResource`.
+
+### ‼️ Breaking Changes
+
+* All deprecated code has been removed.
+
+
+
 ## 0.9
 
 This version adds more ways to manage products.
