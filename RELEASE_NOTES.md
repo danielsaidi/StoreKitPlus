@@ -1,8 +1,11 @@
 # Release Notes
 
-[StoreKitPlus](https://github.com/danielsaidi/StoreKitPlus) will use semver after 1.0. 
+[StoreKitPlus](https://github.com/danielsaidi/StoreKitPlus) honors semantic versioning, with the following strategy:
 
-Until then, breaking changes can happen in any minor version bump.
+* Deprecations can happen at any time.
+* Deprecations should only be removed in `major` updates.
+* Breaking changes should only occur in `major` updates.
+* Breaking changes *can* occur in non-major updates, if the alternative is worse.
 
 
 
