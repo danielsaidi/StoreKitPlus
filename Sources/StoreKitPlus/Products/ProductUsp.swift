@@ -21,8 +21,8 @@ public struct ProductUsp {
     ///   - text: The localized USP description text.
     ///   - iconName: The SF Symbol name for the USP.
     public init(
-        title: LocalizedStringKey,
-        text: LocalizedStringKey,
+        title: LocalizedStringResource,
+        text: LocalizedStringResource,
         iconName: String
     ) {
         self.title = title
@@ -31,10 +31,10 @@ public struct ProductUsp {
     }
     
     /// The localized USP title.
-    public let title: LocalizedStringKey
+    public let title: LocalizedStringResource
 
     /// The localized USP description text.
-    public let text: LocalizedStringKey
+    public let text: LocalizedStringResource
 
     /// The SF Symbol name for the USP.
     public let iconName: String

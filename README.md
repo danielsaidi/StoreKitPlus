@@ -27,6 +27,11 @@ https://github.com/danielsaidi/StoreKitPlus.git
 ```
 
 
+## Supported Platforms
+
+StoreKitPlus supports iOS 16, macOS 14, tvOS 16, watchOS 9, and visionOS 1. 
+
+
 
 ## Getting started
 

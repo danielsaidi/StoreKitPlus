@@ -1,14 +1,14 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.2
 
 import PackageDescription
 
 let package = Package(
     name: "StoreKitPlus",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
-        .tvOS(.v15),
-        .watchOS(.v8),
+        .iOS(.v16),
+        .macOS(.v14),
+        .tvOS(.v16),
+        .watchOS(.v9),
         .visionOS(.v1)
     ],
     products: [

@@ -23,9 +23,9 @@ https://github.com/danielsaidi/StoreKitPlus.git
 ```
 
 
-## Support My Work
+## Supported Platforms
 
-You can [become a sponsor][Sponsors] to help me dedicate more time on my various [open-source tools][OpenSource]. Every contribution, no matter the size, makes a real difference in keeping these tools free and actively developed.
+StoreKitPlus supports iOS 16, macOS 14, tvOS 16, watchOS 9, and visionOS 1.
 
 
 
