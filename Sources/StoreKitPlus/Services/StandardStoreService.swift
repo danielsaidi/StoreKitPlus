@@ -131,13 +131,14 @@ open class StandardStoreService: StoreService {
         return result.isValid ? result : nil
     }
 
-    /// This function is called by the initializer, and will fetch transaction updates
-    /// and try to verify them.
+    /// This function is called by the initializer, and will fetch transaction updates,
+    /// then verify and finish them.
     open func updateTransactionsOnLaunch() {
         Task.detached {
             for await result in Transaction.updates {
                 do {
-                    try result.verify()
+                    let transaction = try result.verify()
+                    await transaction.finish()
                 } catch {
                     print("Transaction listener error: \(error)")
                 }

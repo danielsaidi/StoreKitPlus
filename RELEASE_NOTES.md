@@ -9,6 +9,16 @@
 
 
 
+## 1.0.1
+
+This version fixes unfinished transactions.
+
+### 🐛 Bug Fixes
+
+* `StandardStoreService` now finishes verified transaction updates.
+
+
+
 ## 1.0
 
 This version bumps deployment targets and replaces localized string keys with resources.
